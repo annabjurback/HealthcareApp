@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj": {}
+    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
+    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
+        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
         "projectName": "HealthCare.Core",
-        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
+        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
         "packagesPath": "C:\\Users\\46734\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\obj\\",
+        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\46734\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -59,14 +59,14 @@
         }
       }
     },
-    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj": {
+    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj",
+        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj",
         "projectName": "HealthCare.WebApp",
-        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj",
+        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\HealthCare.WebApp.csproj",
         "packagesPath": "C:\\Users\\46734\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\",
+        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\46734\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -83,8 +83,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
-                "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj"
+              "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
+                "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj"
               }
             }
           }

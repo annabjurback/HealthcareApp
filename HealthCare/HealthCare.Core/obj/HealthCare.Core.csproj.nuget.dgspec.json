@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {}
+    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
+    "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
+        "projectUniqueName": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
         "projectName": "HealthCare.Core",
-        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
+        "projectPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\HealthCare.Core.csproj",
         "packagesPath": "C:\\Users\\46734\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.Core\\obj\\",
+        "outputPath": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\46734\\AppData\\Roaming\\NuGet\\NuGet.Config",
