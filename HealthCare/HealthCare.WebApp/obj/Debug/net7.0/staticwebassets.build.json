@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "MyVnE8yFZUtWR1kkxPMXX21Z1yBUmX3S9FCRW/4Ga8U=",
+  "Hash": "XbhVgJZJ6gxjywjRPhrxRfExrUswQ45tFMLTIqp89Bo=",
   "Source": "HealthCare.WebApp",
   "BasePath": "_content/HealthCare.WebApp",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "HealthCare.WebApp\\wwwroot",
       "Source": "HealthCare.WebApp",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\HealthCare.WebApp.styles.css",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\HealthCare.WebApp.styles.css",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "HealthCare.WebApp.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\HealthCare.WebApp.styles.css"
+      "OriginalItemSpec": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\bundle\\HealthCare.WebApp.styles.css"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HealthCare.WebApp.bundle.scp.css",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HealthCare.WebApp.bundle.scp.css",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "HealthCare.WebApp.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HealthCare.WebApp.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HealthCare.WebApp.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -207,10 +207,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -226,10 +226,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -245,10 +245,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -264,10 +264,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\css\\site.css",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -283,10 +283,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\favicon.png",
       "SourceId": "HealthCare.WebApp",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\46734\\Desktop\\HealthCare\\HealthcareApp\\HealthCare\\HealthCare.WebApp\\wwwroot\\",
       "BasePath": "_content/HealthCare.WebApp",
       "RelativePath": "favicon.png",
       "AssetKind": "All",

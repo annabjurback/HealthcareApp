@@ -21,3 +21,15 @@ C:\Users\46734\Desktop\HealthCare\HealthCare\HealthCare.Core\obj\Debug\net7.0\He
 C:\Users\46734\Desktop\HealthCare\HealthCare\HealthCare.Core\obj\Debug\net7.0\refint\HealthCare.Core.dll
 C:\Users\46734\Desktop\HealthCare\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.pdb
 C:\Users\46734\Desktop\HealthCare\HealthCare\HealthCare.Core\obj\Debug\net7.0\ref\HealthCare.Core.dll
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\bin\Debug\net7.0\HealthCare.Core.deps.json
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\bin\Debug\net7.0\HealthCare.Core.dll
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\bin\Debug\net7.0\HealthCare.Core.pdb
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.AssemblyInfoInputs.cache
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.AssemblyInfo.cs
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.csproj.CoreCompileInputs.cache
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.sourcelink.json
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.dll
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\refint\HealthCare.Core.dll
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\HealthCare.Core.pdb
+C:\Users\46734\Desktop\HealthCare\HealthcareApp\HealthCare\HealthCare.Core\obj\Debug\net7.0\ref\HealthCare.Core.dll
