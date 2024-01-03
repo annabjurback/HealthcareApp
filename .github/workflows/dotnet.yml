@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./HealthCare.Core
+        working-directory: ./HealthCare
 
     steps:
     - uses: actions/checkout@v3
