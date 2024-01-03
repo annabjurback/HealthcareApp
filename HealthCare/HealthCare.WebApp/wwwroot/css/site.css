@@ -10,7 +10,7 @@ html, body {
 
         background-color: rgb(95,143,157);
         display: flex;
-        justify-content: center; /* Centrera horisontellt */
+        justify-content: center;
         align-items: center;
     }
     main{
@@ -30,7 +30,6 @@ html, body {
     .mobile_button {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         font-weight: bold;
         width: 159px;
         height: 67px;
@@ -43,23 +42,40 @@ html, body {
         color: white;
     }
 
-    .mobile_button_icon{
+        .mobile_button:active {
 
-        order:1;
-        width: 41px;
+            background: linear-gradient(0deg, hsla(190, 40%, 56%, 1) 0%, hsla(189, 30%, 39%, 1) 100%);
+        }
+
+    .mobile_button_icon, .mobile_meeting_icon {
+        display: grid;
+        place-items: center;
+        order: 1;
+        min-width: 41px;
         height: 41px;
         background-color: white;
-        border-radius:50px;
-
+        border-radius: 50px;
     }
 
-    .mobile_button_text{
-        order:2;
+    .fa-heart-pulse, .fa-comment, .fa-user, .fa-calendar-days, .fa-star {
+        color: rgb(82,166,188);
+        font-size: 28px;
+    }
+
+    .mobile_button_text {
+        order: 2;
+        margin-left: 5%;
+    }
+
+    .meeting_text {
+
+        order: 2;
+        margin-left: 5%;
     }
 
     .mobile_meeting_container {
         display: grid;
-        place-items: flex-start;
+        /*place-items: flex-start;*/
         width: 327px;
         height: 182px;
         border-radius: 21px;
@@ -72,9 +88,8 @@ html, body {
     }
 
     .mobile_meeting_info {
-        
-        display: grid;
-        place-items: center;
+        display: flex;
+        align-items: center;
         width: 285px;
         height: 48px;
         border-radius: 21px;
@@ -86,7 +101,6 @@ html, body {
         -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
         color: rgb(82,166,188);
         font-weight: bold;
-        
     }
 
     .mobile_title_container{
@@ -107,12 +121,12 @@ html, body {
 
     .user_info_container {
         display: grid;
-        place-items: center;
-        
+        place-items: center;    
         margin-top: 67px;
     }
     #user_img {
-        background-color: red;
+       
+        border: 5px solid white;
         border-radius: 50px;
         width: 60px;
         height: 60px;

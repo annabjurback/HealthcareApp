@@ -1,28 +1,47 @@
 ﻿@page "/patient"
 @code {
 
-	
+	//Hämta patientinformation 
+	//Namn, bild, kommande möten, möteshistorik
+
+	 private async Task HandleButtonClick(int index)
+    {
+        // Logik för knapp med index
+        Console.WriteLine($"Button clicked: {index}");
+    }
 }
 
 <div class="user_info_container">
-	<img id="user_img" src="" />
+	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
 	<h1 id="user_name_display">Patient Name</h1>
 </div>
 
 
 
 <div class="mobile_button_container">
-@for (int i = 0; i < 4; i++) {
 
-	<MobileButtonComponent />
-}
+	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="0"
+		ButtonText="Booking" Icon="fa-solid fa-heart-pulse" />
+	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="1" ButtonText="Inbox" Icon="fa-solid fa-comment"/>
+	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="2" ButtonText="My Pages" Icon="fa-solid fa-user"/>
+	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="3" ButtonText="Feedback" Icon="fa-solid fa-star" />
+
 </div>
+
 <div class="mobile_title_container">
+
 <h2 class="mobile_title">Upcoming meetings</h2>
+
 </div>
+
+
+
 <div class="mobile_meeting_container">
+
 	@*//Hämta information om möte från databas
 	//Loopa ut antal möten *@
-	<MobileMeetingComponent/>
+	<MobileMeetingComponent Icon="fa-solid fa-calendar-days"/>
 
 </div>
+
+
