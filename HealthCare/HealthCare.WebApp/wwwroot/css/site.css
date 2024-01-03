@@ -4,6 +4,145 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+@media only screen and (max-width: 767px) {
+
+    body {
+
+        background-color: rgb(95,143,157);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    main{
+        display: grid;
+        place-items:center;
+    }
+  
+
+    .mobile_button_container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+        margin-top: 68px;     
+        place-items: center;
+    }
+
+    .mobile_button {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        width: 159px;
+        height: 67px;
+        border-radius: 21px;
+        border: none;
+        background: linear-gradient(0deg, hsla(190, 40%, 66%, 1) 0%, hsla(189, 30%, 49%, 1) 100%);
+        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        color: white;
+    }
+
+        .mobile_button:active {
+
+            background: linear-gradient(0deg, hsla(190, 40%, 56%, 1) 0%, hsla(189, 30%, 39%, 1) 100%);
+        }
+
+    .mobile_button_icon, .mobile_meeting_icon {
+        display: grid;
+        place-items: center;
+        order: 1;
+        min-width: 41px;
+        height: 41px;
+        background-color: white;
+        border-radius: 50px;
+    }
+
+    .fa-heart-pulse, .fa-comment, .fa-user, .fa-calendar-days, .fa-star {
+        color: rgb(82,166,188);
+        font-size: 28px;
+    }
+
+    .mobile_button_text {
+        order: 2;
+        margin-left: 5%;
+    }
+
+    .meeting_text {
+
+        order: 2;
+        margin-left: 5%;
+    }
+
+    .mobile_meeting_container {
+        display: grid;
+        
+        width: 327px;
+        height: 182px;
+        border-radius: 21px;
+        border: none;
+        background: linear-gradient(0deg, hsla(190, 40%, 66%, 1) 0%, hsla(189, 30%, 49%, 1) 100%);
+        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        margin-top: 16px;
+    }
+
+    .mobile_meeting_info {
+        display: flex;
+        align-items: center;
+        width: 285px;
+        height: 48px;
+        border-radius: 21px;
+        border: none;
+        margin: 20px;
+        background-color: rgb(253,253,253);
+        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        color: rgb(82,166,188);
+        font-weight: bold;
+    }
+
+    .mobile_title_container{
+       
+        width:350px;
+       margin:auto;
+        
+    }
+    .mobile_title {
+        
+        font-weight:bold;
+        font-size:20px;
+        color:white;
+        display:grid;
+        place-items: center;
+       margin-top: 26px;
+    }
+
+    .user_info_container {
+        display: grid;
+        place-items: center;    
+        margin-top: 67px;
+    }
+    #user_img {
+       
+        border: 5px solid white;
+        border-radius: 50px;
+        width: 60px;
+        height: 60px;
+    }
+
+    #user_name_display{
+
+        color:white;
+        font-weight: bold;
+        font-size: 20px;
+        margin-top: 21px;
+    }
+
+
+}
+
 h1:focus {
     outline: none;
 }
