@@ -75,7 +75,7 @@ html, body {
 
     .mobile_meeting_container {
         display: grid;
-        /*place-items: flex-start;*/
+        
         width: 327px;
         height: 182px;
         border-radius: 21px;
