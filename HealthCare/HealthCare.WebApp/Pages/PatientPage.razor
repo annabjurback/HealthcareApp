@@ -1,31 +1,52 @@
-﻿@page "/patient"
+﻿@inject NavigationManager Navigation
+@page "/patient"
 @code {
 
 	//Hämta patientinformation 
 	//Namn, bild, kommande möten, möteshistorik
+	private async Task HandleButtonClick(int index)
+	{
+		if (index == 0)
+		{
+			Navigation.NavigateTo("/booking");
+		}
+		else if (index == 1)
+		{
+			//send to inbox page
+			//Navigation.NavigateTo("");
+		}
+		else if (index == 2)
+		{
+			//send to inbox page
+			//Navigation.NavigateTo("");
+		}
+		else if (index == 3)
+		{
+			//send to inbox page
+			//Navigation.NavigateTo("");
+		}
+		else if (index == 4)
+		{
+			// this button is a submitbutton on bookingpage
+			//send request to booking controller
+			//Console.WriteLine("Booking.....");
+			//Navigation.NavigateTo("");
+		}
 
-	 private async Task HandleButtonClick(int index)
-    {
-        // Logik för knapp med index
-        Console.WriteLine($"Button clicked: {index}");
-    }
+	}
 }
 
-
 <div class="user_info_container">
-
 	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
 	<h1 id="user_name_display">Patient Name</h1>
 </div>
-
-
 
 <div class="mobile_button_container">
 
 	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="0"
 		ButtonText="Booking" Icon="fa-solid fa-heart-pulse" />
 	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="1" ButtonText="Inbox" Icon="fa-solid fa-comment"/>
-	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="2" ButtonText="My Pages" Icon="fa-solid fa-user"/>
+	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="2" ButtonText="My Profile" Icon="fa-solid fa-user"/>
 	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="3" ButtonText="Feedback" Icon="fa-solid fa-star" />
 
 </div>
@@ -36,9 +57,7 @@
 
 </div>
 
-
 <div class="mobile_meeting_container">
-
 	@*//Hämta information om möte från databas
 	//Loopa ut antal möten *@
 	<MobileMeetingComponent Icon="fa-solid fa-calendar-days"/>

@@ -6,6 +6,8 @@ html, body {
 
 @media only screen and (max-width: 767px) {
 
+  /*  //Patient Page css*/
+
     body {
 
         background-color: rgb(95,143,157);
@@ -57,7 +59,7 @@ html, body {
         border-radius: 50px;
     }
 
-    .fa-heart-pulse, .fa-comment, .fa-user, .fa-calendar-days, .fa-star {
+    .fa-heart-pulse, .fa-comment, .fa-user, .fa-calendar-days, .fa-star, .fa-circle-check, .fa-house {
         color: rgb(82,166,188);
         font-size: 28px;
     }
@@ -74,10 +76,11 @@ html, body {
     }
 
     .mobile_meeting_container {
+        padding:10px;
         display: grid;
-        
+        place-items:center;
         width: 327px;
-        height: 182px;
+        min-height: 88px;
         border-radius: 21px;
         border: none;
         background: linear-gradient(0deg, hsla(190, 40%, 66%, 1) 0%, hsla(189, 30%, 49%, 1) 100%);
@@ -93,8 +96,8 @@ html, body {
         width: 285px;
         height: 48px;
         border-radius: 21px;
+        margin:10px;
         border: none;
-        margin: 20px;
         background-color: rgb(253,253,253);
         box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
         -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
@@ -140,6 +143,39 @@ html, body {
         margin-top: 21px;
     }
 
+   /* BookingPage css*/
+
+    .booking_date_container{
+
+        display:grid;
+        place-items:center;
+    }
+    .booking_style {
+
+        border: none;
+        font-size: 22px;
+        color: rgb(82,166,188);
+    }
+
+    .home_button {
+        display: grid;
+        place-items: center;
+        margin: 10px;
+        display: grid;
+        place-self: flex-start;
+        background-color: white;
+        border: none;
+        border-radius: 21px;
+        width: 60px;
+        height: 40px;
+        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    }
+        .home_button:active {
+
+            background-color: rgb(128, 128, 128);
+        }
 
 }
 
