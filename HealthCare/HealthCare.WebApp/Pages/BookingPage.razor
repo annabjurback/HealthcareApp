@@ -1,0 +1,31 @@
+﻿@inject NavigationManager Navigation
+@page "/booking"
+
+@code {
+	 private EventCallback<string> HomebuttonClicked { get; set; }
+
+	private async Task ReturnToPatientPage()
+	{
+		Navigation.NavigateTo("/patient");
+		
+	}
+
+}
+
+<button class="home_button" type="button" @onclick="() => HomebuttonClicked.InvokeAsync()"><i class="fa-solid fa-house"></i></button>
+
+<div class="user_info_container">
+
+	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
+	<h1 id="user_name_display">Patient Name</h1>
+</div>
+
+<PatientBookingComponent/>
+
+
+@code {
+	protected override void OnInitialized()
+	{
+		HomebuttonClicked = EventCallback.Factory.Create<string>(this, ReturnToPatientPage);
+	}
+}
