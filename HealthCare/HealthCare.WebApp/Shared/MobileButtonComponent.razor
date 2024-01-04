@@ -1,4 +1,4 @@
-﻿
+﻿@inject NavigationManager Navigation
 
 <button class="mobile_button" @onclick="HandleClick" >
     <span class="mobile_button_text">@ButtonText</span>
@@ -6,25 +6,24 @@
 </button>
 
 @code {
-   
-        [Parameter]
-        public EventCallback<int> OnButtonClick { get; set; }
 
-        [Parameter]
-        public int ButtonIndex { get; set; }
+	[Parameter]
+	public EventCallback<int> OnButtonClick { get; set; }
 
-        [Parameter]
-        public string ButtonText { get; set; }
+	[Parameter]
+	public int ButtonIndex { get; set; }
 
-        [Parameter]
-        public string Icon { get; set; }
+	[Parameter]
+	public string ButtonText { get; set; }
+
+	[Parameter]
+	public string Icon { get; set; }
 
 
-        private async Task HandleClick()
-        {
-            // Logik för klickhändelsen
-            
-            // Skicka tillbaka information till föräldrakomponenten
-            await OnButtonClick.InvokeAsync(ButtonIndex);
-        }
+	private async Task HandleClick()
+	{         
+		await OnButtonClick.InvokeAsync(ButtonIndex);
+	}
+
+	
 }
