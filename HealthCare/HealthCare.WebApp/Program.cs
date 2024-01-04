@@ -4,6 +4,8 @@ using HealthCare.Core;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
+using HealthCare.Core.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
+builder.Services.AddDbContext<HealthcareContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("HealthcareConnection")));
 
 // Configure Auth0 Authentication
 builder.Services
