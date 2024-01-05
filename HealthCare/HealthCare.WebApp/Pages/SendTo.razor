@@ -1,0 +1,51 @@
+﻿@page "/sendTo"
+@using HealthCare.WebApp.Services.Auth0
+@using Microsoft.AspNetCore.WebUtilities
+@inject TokenService TokenService
+@inject NavigationManager NavigationManager
+
+@code {
+    private string userToken;
+    private bool isError = false;
+    private string errorMessage;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                // Extract the authorization code from the query string
+                var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+                if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
+                {
+                    userToken = await TokenService.ExchangeAuthorizationCodeForUserTokenAsync(code);
+                    // Now userToken contains the user's ID token
+                }
+                else
+                {
+                    isError = true;
+                    errorMessage = "Authorization code not found in the URL query string.";
+                }
+            }
+            catch (Exception ex)
+            {
+                isError = true;
+                errorMessage = ex.Message;
+            }
+
+            StateHasChanged(); // Notify the component that its state has changed.
+        }
+    }
+}
+
+<p>Send To</p>
+@if (isError)
+{
+    <p>Error: @errorMessage</p>
+}
+else if (!string.IsNullOrEmpty(userToken))
+{
+    <p>User Token obtained successfully.</p>
+    <p>Token: @userToken</p> <!-- Display the token -->
+}
