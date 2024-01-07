@@ -1,11 +1,15 @@
 ﻿@page "/sendTo"
 @using HealthCare.WebApp.Services.Auth0
 @using Microsoft.AspNetCore.WebUtilities
+@using System.IdentityModel.Tokens.Jwt
 @inject TokenService TokenService
 @inject NavigationManager NavigationManager
 
 @code {
     private string userToken;
+    private string userRole;
+    private string userEmail;
+    private string userId;
     private bool isError = false;
     private string errorMessage;
 
@@ -20,7 +24,17 @@
                 if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
                 {
                     userToken = await TokenService.ExchangeAuthorizationCodeForUserTokenAsync(code);
-                    // Now userToken contains the user's ID token
+
+                    // Nu kan du dekodera tokenet för att få roller eller annan information
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(userToken) as JwtSecurityToken;
+                    var rolesClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Authorizationroles")?.Value;
+                    if (rolesClaim != null)
+                    {
+                        userRole = rolesClaim;
+                        userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+                        userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
+                    }
                 }
                 else
                 {
@@ -46,6 +60,10 @@
 }
 else if (!string.IsNullOrEmpty(userToken))
 {
+    //TODO TA BORT OCH GÖR LOGIGEN ATT DE SKICKA OM ROLE != ADMIN SÅNNAFALL VISA TVÅ KNAPPAR.
     <p>User Token obtained successfully.</p>
-    <p>Token: @userToken</p> <!-- Display the token -->
+    <p>Token: @userToken</p>
+    <p>Role: @userRole</p> 
+    <p>Email: @userEmail</p> 
+    <p>User ID: @userId</p> 
 }
