@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthCare.Core.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -9,20 +10,21 @@ namespace HealthCare.Core
 {
 	public class PatientService
 	{
-		public PatientService() { }
+		private readonly PatientController _controller;
+		public PatientService(PatientController controller) 
+		{
+			_controller = controller;
+		}
 
-		//public void LogInPatient(guid, namespace, etc etc)
-		//{
-		//	// check if patient exists
-		//	if(PatientExists(guid))
-		//	{
-		//		// 
-		//	}
-		//	else{
-		//		SavePatient(allt);
-		//	}
-		//	GetPatient(guid);
-		//}
-
+		public void LogInPatient(string patientId, string firstName, string lastName, string email)
+		{
+			// save patient first if it doesnt exist in db
+			if(!_controller.PatientExists(patientId))
+			{
+				_controller.SavePatient(patientId, firstName, lastName, email);
+			}
+			// then, return patient
+			_controller.GetPatient(patientId);
+		}
 	}
 }

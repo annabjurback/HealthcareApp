@@ -23,6 +23,7 @@ builder.Services.AddDbContext<HealthcareContext>(options => options.UseSqlServer
     builder.Configuration.GetConnectionString("HealthcareConnection")));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Configure Auth0 Authentication
 builder.Services
@@ -68,6 +69,12 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

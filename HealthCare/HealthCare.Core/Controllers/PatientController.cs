@@ -45,14 +45,26 @@ namespace HealthCare.Core.Controllers
 				LastName = lastName,
 				Email = email,
 			};
-			_context.Patients.Add(Patient);
-			_context.SaveChanges();
+			try
+			{
+				_context.Patients.Add(Patient);
+				_context.SaveChanges();
+			}
+			catch (DbUpdateException ex)
+			{
+				// inner exception
+				var innerException = ex.InnerException;
+			}
 		}
 
 		[HttpGet("/patient")]
-		public ActionResult<Patient> GetPatient(string patientId)
+		public Patient GetPatient(string patientId)
 		{
-			return Ok(_context.Patients.Single(x => x.PatientId == patientId));
+			return _context.Patients.Single(x => x.PatientId == patientId);
 		}
+		//public ActionResult<Patient> GetPatient(string patientId)
+		//{
+		//	return Ok(_context.Patients.Single(x => x.PatientId == patientId));
+		//}
 	}
 }
