@@ -4,24 +4,9 @@
 
 <div class="page">
     <main>
-        <div class="top-row px-4">
-            <button class="hamburger-button" @onclick="ToggleDropdown">
-                ☰
-            </button>
-            @if (isDropdownOpen)
-            {
-                <div class="dropdown-menu">
-                    <a href="/about-us">About Us</a>
-                    <a href="/info">Info</a>
-                    <!-- TODO add login / logout -->
-                    <!-- <a href="/login">Log In</a> -->
-                </div>
-            }
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
+      
+      @Body
+       
     </main>
 </div>
 

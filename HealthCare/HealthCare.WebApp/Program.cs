@@ -5,6 +5,9 @@ using HealthCare.WebApp.Services.Auth0;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.Extensions.Configuration;
 using static HealthCare.WebApp.Services.Auth0.TokenService;
+using Microsoft.AspNetCore.Authentication;
+using HealthCare.Core.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,8 @@ builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0Settings.SectionName));
 builder.Services.AddHttpClient();
+builder.Services.AddDbContext<HealthcareContext>(options => options.UseSqlServer(
+    builder.Configuration.GetConnectionString("HealthcareConnection")));
 
 builder.Services
     .AddAuth0WebAppAuthentication(options => {
