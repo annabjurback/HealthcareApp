@@ -1,15 +1,18 @@
-﻿using HealthCare.Core.Context;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HealthCare.Core.Context;
+using Microsoft.EntityFrameworkCore;
 using HealthCare.Core.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCare.Core.Controllers
 {
-	public class PatientController
+	[Route("/patient")]
+	//[ApiController]
+	public class PatientController : ControllerBase
 	{
 		private readonly HealthcareContext _context;
 
@@ -18,6 +21,7 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
+		[HttpGet("/patientexist")]
 		public bool PatientExists(string patientId)
 		{
 			if (_context.Patients.Single(x => x.PatientId == patientId) != null)
@@ -28,8 +32,9 @@ namespace HealthCare.Core.Controllers
 			{
 				return false;
 			}
-
 		}
+
+		[HttpPost("/savepatient")]
 		public void SavePatient(string patientId, string firstName, string lastName, string email)
 		{
 			// dont forget error handling
@@ -42,6 +47,12 @@ namespace HealthCare.Core.Controllers
 			};
 			_context.Patients.Add(Patient);
 			_context.SaveChanges();
+		}
+
+		[HttpGet("/patient")]
+		public ActionResult<Patient> GetPatient(string patientId)
+		{
+			return Ok(_context.Patients.Single(x => x.PatientId == patientId));
 		}
 	}
 }

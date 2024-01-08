@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddRazorPages(options =>
 {
@@ -23,6 +21,8 @@ builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddDbContext<HealthcareContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("HealthcareConnection")));
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
 
 // Configure Auth0 Authentication
 builder.Services
