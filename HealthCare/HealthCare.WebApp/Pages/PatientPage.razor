@@ -1,6 +1,25 @@
 ﻿@inject NavigationManager Navigation
+@inject HealthCare.Core.Models.Patient patient;
 @page "/patient"
 @code {
+
+    [Parameter]
+    public int PatientID { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		var uri = new Uri(Navigation.Uri);
+		var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+
+		if (query.TryGetValue("patientID", out var patientIDString))
+		{
+			if (int.TryParse(patientIDString, out var parsedPatientID))
+			{
+				PatientID = parsedPatientID;
+			}
+		}
+		patient = await .GetPersonAsync(PatientID);
+	}
 
 	//Hämta patientinformation 
 	//Namn, bild, kommande möten, möteshistorik
