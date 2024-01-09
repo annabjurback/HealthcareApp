@@ -21,20 +21,20 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpGet("/caregiverexist")]
-        public bool CaregiverExists(Guid caregiverId)
+        public ActionResult<bool> CaregiverExists(Guid caregiverId)
         {
             if (_context.Caregivers.Single(x => x.CaregiverId == caregiverId) != null)
             {
-                return true;
+                return Ok(true);
             }
             else
             {
-                return false;
+                return Ok(false);
             }
         }
 
         [HttpPost("/savecaregiver")]
-        public void SaveCaregiver(Guid caregiverId, string firstName, string lastName, string email)
+        public ActionResult SaveCaregiver(Guid caregiverId, string firstName, string lastName, string email)
         {
             Caregiver Caregiver = new()
             {
@@ -47,18 +47,41 @@ namespace HealthCare.Core.Controllers
             {
                 _context.Caregivers.Add(Caregiver);
                 _context.SaveChanges();
+
+                return Ok();
             }
             catch (DbUpdateException ex)
             {
                 // inner exception
                 var innerException = ex.InnerException;
+
+                return NotFound(innerException);
             }
         }
 
         [HttpGet("/caregiver")]
-        public Caregiver GetCaregiver(Guid caregiverId)
+        public ActionResult<Caregiver> GetCaregiver(Guid caregiverId)
         {
             return _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+        }
+
+        [HttpPut]
+        public ActionResult EditCaregiver(Guid caregiverId, string firstName, string lastName)
+        {
+            try
+            {
+                var caregiver = _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+                caregiver.FirstName = firstName;
+                caregiver.LastName = lastName;
+
+                _context.SaveChanges();
+
+                return RedirectToAction("caregiver");
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
     }
 }
