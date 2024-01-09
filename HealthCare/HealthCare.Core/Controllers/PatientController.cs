@@ -66,5 +66,14 @@ namespace HealthCare.Core.Controllers
 		//{
 		//	return Ok(_context.Patients.Single(x => x.PatientId == patientId));
 		//}
+
+		[HttpPut("/patient")]
+		public void UpdatePatient(Guid patientId, string firstName, string lastName)
+		{
+			var patient = _context.Patients.Single(x => x.PatientId == patientId);
+			patient.FirstName = firstName;
+			patient.LastName = lastName;
+			_context.SaveChanges();
+		}
 	}
 }
