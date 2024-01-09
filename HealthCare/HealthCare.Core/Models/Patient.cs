@@ -10,7 +10,7 @@ namespace HealthCare.Core.Models
     public class Patient
     {
         [Key]
-        public Guid PatientId { get; set; }
+        public string PatientId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }

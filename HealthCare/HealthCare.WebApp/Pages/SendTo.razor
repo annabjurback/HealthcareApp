@@ -1,0 +1,109 @@
+﻿@page "/sendTo"
+@using HealthCare.WebApp.Services
+@using HealthCare.WebApp.Services.Auth0
+@using Microsoft.AspNetCore.WebUtilities
+@using System.IdentityModel.Tokens.Jwt
+@using HealthCare.Core
+@inject PatientService PatientService
+@inject TokenService TokenService
+@inject NavigationManager NavigationManager
+@inject UserDataService UserDataService
+
+@if (!string.IsNullOrEmpty(userRole) && userRole.ToLower() == "admin" && !isError)
+{
+    <button @onclick="@(() => NavigationManager.NavigateTo("/patientpage"))">Go to Patient Page</button>
+
+    <button @onclick="@(() => NavigationManager.NavigateTo("/caregiverpage"))">Go to Caregiver Page</button>
+
+}
+
+@code {
+    private string userToken;
+    private string userRole;
+    private string userEmail;
+    private string userId;
+    private string firstName;
+    private string lastName;
+    private bool isError = false;
+    private string errorMessage;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                // Extract the authorization code from the query string
+                var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+                if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var code))
+                {
+                    userToken = await TokenService.ExchangeAuthorizationCodeForUserTokenAsync(code);
+
+                    var handler = new JwtSecurityTokenHandler();
+                    var jsonToken = handler.ReadToken(userToken) as JwtSecurityToken;
+                    var rolesClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Authorizationroles")?.Value;
+                    if (rolesClaim != null)
+                    {
+                        //TODO Spara dessa värden till i DB. 
+                        userRole = rolesClaim;
+                        userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+                        firstName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "given_name")?.Value;
+                        lastName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "family_name")?.Value;
+                        userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
+                        
+
+                    }
+                }
+                else
+                {
+                    isError = true;
+                    errorMessage = "Authorization code not found in the URL query string.";
+                }
+            }
+            catch (Exception ex)
+            {
+                isError = true;
+                errorMessage = ex.Message;
+            }
+
+            if (!isError && !string.IsNullOrEmpty(userRole))
+            {
+                // Store user ID securely in the UserDataService
+                UserDataService.SetUserId(userId);
+
+                switch (userRole.ToLower())
+                {
+                    case "patient":
+                        RedirectUser(userRole, userId, userEmail, firstName, lastName);
+                        break;
+                    case "caregiver":
+                        RedirectUser(userRole, userId, userEmail, firstName, lastName);
+                        break;
+                    case "admin":
+                        break;
+                    default:
+                        isError = true;
+                        errorMessage = "Invalid user role.";
+                        break;
+                }
+            }
+            StateHasChanged(); 
+        }
+    }
+    public void RedirectUser(string role, string id, string email, string firstName, string lastName)
+    {
+        if (role == "patient")
+        {
+            PatientService.LogInPatient(id, firstName, lastName, email);
+
+            NavigationManager.NavigateTo("/patientpage");
+        }
+        else if (role == "caregiver")
+        {
+
+
+            NavigationManager.NavigateTo("/caregiver");
+        }
+    }
+}
+
