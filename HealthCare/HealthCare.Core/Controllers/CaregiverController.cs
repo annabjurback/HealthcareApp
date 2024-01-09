@@ -23,13 +23,20 @@ namespace HealthCare.Core.Controllers
         [HttpGet("/caregiverexist")]
         public ActionResult<bool> CaregiverExists(Guid caregiverId)
         {
-            if (_context.Caregivers.Single(x => x.CaregiverId == caregiverId) != null)
+            try
             {
-                return Ok(true);
+                if (_context.Caregivers.Single(x => x.CaregiverId == caregiverId) != null)
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return Ok(false);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Ok(false);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -62,7 +69,14 @@ namespace HealthCare.Core.Controllers
         [HttpGet("/caregiver")]
         public ActionResult<Caregiver> GetCaregiver(Guid caregiverId)
         {
-            return _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+            try
+            {
+                return _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+            }
+            catch (Exception ex) 
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpPut]
@@ -80,7 +94,7 @@ namespace HealthCare.Core.Controllers
             }
             catch (Exception ex)
             {
-                return NotFound(ex);
+                return NotFound(ex.InnerException);
             }
         }
     }
