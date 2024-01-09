@@ -21,7 +21,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpGet("/caregiverexist")]
-        public ActionResult<bool> CaregiverExists(Guid caregiverId)
+        public ActionResult<bool> CaregiverExists(string caregiverId)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpPost("/createcaregiver")]
-        public ActionResult CreateCaregiver(Guid caregiverId, string firstName, string lastName, string email)
+        public ActionResult CreateCaregiver(string caregiverId, string firstName, string lastName, string email)
         {
             Caregiver Caregiver = new()
             {
@@ -67,7 +67,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpGet("/caregiver")]
-        public ActionResult<Caregiver> GetCaregiver(Guid caregiverId)
+        public ActionResult<Caregiver> GetCaregiver(string caregiverId)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpPut("/editcaregiver")]
-        public ActionResult<Caregiver> EditCaregiver(Guid caregiverId, string firstName, string lastName)
+        public ActionResult<Caregiver> EditCaregiver(string caregiverId, string firstName, string lastName)
         {
             try
             {
