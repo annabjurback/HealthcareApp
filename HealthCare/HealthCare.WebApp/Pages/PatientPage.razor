@@ -1,21 +1,19 @@
 ﻿@inject NavigationManager Navigation
-@*@inject UserDataService UserDataService*@
-@inject HealthCare.Core.Models.Patient Patient;
-@page "/patient";
-
+@inject UserDataService UserDataService
+@page "/patientpage"
+@using HealthCare.WebApp.Services
 @code {
 
+	private string userId;
+
 	protected override async Task OnInitializedAsync()
-//{
-//    userId = UserDataService.GetUserId();
+	{
+		userId = UserDataService.GetUserId();
+		
 
-//    // Write the user ID to the console
-//    Console.WriteLine($"User ID: {userId}");
-
-		Patient = await .GetPersonAsync(userId);
-//}
-	
-
+		// Write the user ID to the console
+		Console.WriteLine($"User ID: {userId}");
+	}
 
 	//Hämta patientinformation 
 	//Namn, bild, kommande möten, möteshistorik

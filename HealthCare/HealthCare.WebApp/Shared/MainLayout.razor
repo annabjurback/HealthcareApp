@@ -10,3 +10,42 @@
     </main>
 </div>
 
+<style>
+    .hamburger-button {
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        background-color: white;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        padding: 1em;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .dropdown-menu a {
+            padding: 0.5em 1em;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+</style>
+
+@code {
+    private bool isDropdownOpen = false;
+
+    private void ToggleDropdown()
+    {
+        isDropdownOpen = !isDropdownOpen;
+    }
+}
