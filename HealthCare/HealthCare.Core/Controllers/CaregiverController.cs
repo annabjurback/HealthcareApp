@@ -40,8 +40,8 @@ namespace HealthCare.Core.Controllers
             }
         }
 
-        [HttpPost("/savecaregiver")]
-        public ActionResult SaveCaregiver(Guid caregiverId, string firstName, string lastName, string email)
+        [HttpPost("/createcaregiver")]
+        public ActionResult CreateCaregiver(Guid caregiverId, string firstName, string lastName, string email)
         {
             Caregiver Caregiver = new()
             {
@@ -79,7 +79,7 @@ namespace HealthCare.Core.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("/editcaregiver")]
         public ActionResult<Caregiver> EditCaregiver(Guid caregiverId, string firstName, string lastName)
         {
             try
