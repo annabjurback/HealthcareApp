@@ -66,7 +66,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpPut]
-        public ActionResult EditCaregiver(Guid caregiverId, string firstName, string lastName)
+        public ActionResult<Caregiver> EditCaregiver(Guid caregiverId, string firstName, string lastName)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace HealthCare.Core.Controllers
 
                 _context.SaveChanges();
 
-                return RedirectToAction("caregiver");
+                return Ok(caregiver);
             }
             catch (Exception ex)
             {
