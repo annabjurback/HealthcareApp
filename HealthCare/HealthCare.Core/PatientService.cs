@@ -21,7 +21,14 @@ namespace HealthCare.Core
 			// save patient first if it doesnt exist in db
 			if(!_controller.PatientExists(patientId))
 			{
-				_controller.SavePatient(patientId, firstName, lastName, email);
+				if(firstName == null || firstName == "")
+				{
+					_controller.SavePatient(patientId, "", "", email);
+				}
+				else
+				{
+					_controller.SavePatient(patientId, firstName, lastName, email);
+				}
 			}
 			// then, return patient
 			_controller.GetPatient(patientId);
