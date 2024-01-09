@@ -1,13 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-using HealthCare.Core;
+﻿using HealthCare.Core;
 using HealthCare.WebApp.Services.Auth0;
 using Auth0.AspNetCore.Authentication;
-using Microsoft.Extensions.Configuration;
-using static HealthCare.WebApp.Services.Auth0.TokenService;
-using Microsoft.AspNetCore.Authentication;
 using HealthCare.Core.Context;
 using Microsoft.EntityFrameworkCore;
+using HealthCare.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +12,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
+builder.Services.AddScoped<UserDataService>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0Settings.SectionName));

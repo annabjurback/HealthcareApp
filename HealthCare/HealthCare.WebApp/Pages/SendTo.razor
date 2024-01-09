@@ -1,9 +1,17 @@
 ﻿@page "/sendTo"
+@using HealthCare.WebApp.Services
 @using HealthCare.WebApp.Services.Auth0
 @using Microsoft.AspNetCore.WebUtilities
 @using System.IdentityModel.Tokens.Jwt
 @inject TokenService TokenService
 @inject NavigationManager NavigationManager
+@inject UserDataService UserDataService
+
+@if (!string.IsNullOrEmpty(userRole) && userRole.ToLower() == "admin" && !isError)
+{
+    <button @onclick="@(() => RedirectUser("caregiver"))">Redirect to Caregiver Page</button>
+    <button @onclick="@(() => RedirectUser("patient"))">Redirect to Patient Page</button>
+}
 
 @code {
     private string userToken;
@@ -31,6 +39,7 @@
                     var rolesClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Authorizationroles")?.Value;
                     if (rolesClaim != null)
                     {
+                        //TODO Spara dessa värden till i DB. 
                         userRole = rolesClaim;
                         userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
                         userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
@@ -48,24 +57,43 @@
                 errorMessage = ex.Message;
             }
 
+            if (!isError && !string.IsNullOrEmpty(userRole))
+            {
+                // Store user ID securely in the UserDataService
+                UserDataService.SetUserId(userId);
+
+                switch (userRole.ToLower())
+                {
+                    case "patient":
+                        NavigationManager.NavigateTo("/patientPage");
+                        break;
+                    case "caregiver":
+                        NavigationManager.NavigateTo("/caregiverPage");
+                        break;
+                    case "admin":
+                        break;
+                    default:
+                        isError = true;
+                        errorMessage = "Invalid user role.";
+                        break;
+                }
+            }
+
             StateHasChanged(); // Notify the component that its state has changed. 
 
-            //Kalla på metoden på Annas Service metod. (SKICKA MED GUID)
+            //TODO Kalla på metoden på Annas Service metod. (SKICKA MED GUID)
+        }
+    }
+    public void RedirectUser(string role)
+    {
+        if (role == "patient")
+        {
+            NavigationManager.NavigateTo("/patient");
+        }
+        else if (role == "caregiver")
+        {
+            NavigationManager.NavigateTo("/caregiver");
         }
     }
 }
 
-<p>Send To</p>
-@if (isError)
-{
-    <p>Error: @errorMessage</p>
-}
-else if (!string.IsNullOrEmpty(userToken))
-{
-    //TODO TA BORT OCH GÖR LOGIGEN ATT DE SKICKA OM ROLE != ADMIN SÅNNAFALL VISA TVÅ KNAPPAR.
-    <p>User Token obtained successfully.</p>
-    <p>Token: @userToken</p>
-    <p>Role: @userRole</p> 
-    <p>Email: @userEmail</p> 
-    <p>User ID: @userId</p> 
-}
