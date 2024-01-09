@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthCare.Core.Migrations
 {
     /// <inheritdoc />
-    public partial class OriginalSetup : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace HealthCare.Core.Migrations
                 name: "Caregivers",
                 columns: table => new
                 {
-                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CaregiverId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -29,7 +29,7 @@ namespace HealthCare.Core.Migrations
                 name: "Patients",
                 columns: table => new
                 {
-                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PatientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -60,7 +60,7 @@ namespace HealthCare.Core.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReviewText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PatientId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,8 +84,8 @@ namespace HealthCare.Core.Migrations
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ServiceId = table.Column<int>(type: "int", nullable: false),
                     Completed = table.Column<bool>(type: "bit", nullable: false),
-                    PatientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CaregiverId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    PatientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CaregiverId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {

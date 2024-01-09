@@ -22,9 +22,9 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpGet("/patientexist")]
-		public bool PatientExists(Guid patientId)
+		public bool PatientExists(string patientId)
 		{
-			if (_context.Patients.Single(x => x.PatientId == patientId) != null)
+			if (_context.Patients.FirstOrDefault(x => x.PatientId == patientId) != null)
 			{
 				return true;
 			}
@@ -35,7 +35,7 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpPost("/savepatient")]
-		public void SavePatient(Guid patientId, string firstName, string lastName, string email)
+		public void SavePatient(string patientId, string firstName, string lastName, string email)
 		{
 			// dont forget error handling
 			var Patient = new Patient
@@ -58,7 +58,7 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpGet("/patient")]
-		public Patient GetPatient(Guid patientId)
+		public Patient GetPatient(string patientId)
 		{
 			return _context.Patients.Single(x => x.PatientId == patientId);
 		}
