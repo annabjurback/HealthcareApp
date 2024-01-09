@@ -1,0 +1,17 @@
+﻿<h3>Enter your name:</h3>
+<form>
+	<input type="text" @bind="firstName" placeholder="First name" />
+	<input type="text" @bind="lastName" placeholder="Last name" />
+
+</form>
+
+@using HealthCare.Core.Controllers;
+@code {
+	public string firstName;
+	public string lastName;
+
+	public void SendPatientName()
+	{
+		
+	}
+}
