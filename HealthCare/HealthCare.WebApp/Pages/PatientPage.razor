@@ -1,5 +1,5 @@
 ﻿@inject NavigationManager Navigation
-@inject HealthCare.Core.Models.Patient patient;
+@inject HealthCare.Core.Models.Patient Patient;
 @page "/patient"
 @code {
 
@@ -9,6 +9,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		var uri = new Uri(Navigation.Uri);
+
 		var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
 
 		if (query.TryGetValue("patientID", out var patientIDString))
@@ -18,7 +19,7 @@
 				PatientID = parsedPatientID;
 			}
 		}
-		patient = await .GetPersonAsync(PatientID);
+		Patient = await .GetPersonAsync(PatientID);
 	}
 
 	//Hämta patientinformation 
@@ -57,7 +58,7 @@
 
 <div class="user_info_container">
 	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
-	<h1 id="user_name_display">Patient Name</h1>
+	<h1 id="user_name_display">@Patient.name</h1>
 </div>
 
 <div class="mobile_button_container">
