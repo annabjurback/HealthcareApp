@@ -4,24 +4,24 @@ using Auth0.AspNetCore.Authentication;
 using HealthCare.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using HealthCare.WebApp.Services;
+using HealthCare.Core.Controllers;
+using HealthCare.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
-<<<<<<< HEAD
 builder.Services.AddRazorPages();
-=======
-// Add services to the container.
 
 builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/"); // Secures the root folder, requiring authorization by default
 });
->>>>>>> develop
+
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<UserDataService>();
+builder.Services.AddScoped<PatientService>();
+builder.Services.AddScoped<PatientController>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0Settings.SectionName));

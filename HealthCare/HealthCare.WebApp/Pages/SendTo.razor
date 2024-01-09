@@ -3,14 +3,18 @@
 @using HealthCare.WebApp.Services.Auth0
 @using Microsoft.AspNetCore.WebUtilities
 @using System.IdentityModel.Tokens.Jwt
+@using HealthCare.Core
+@inject PatientService PatientService
 @inject TokenService TokenService
 @inject NavigationManager NavigationManager
 @inject UserDataService UserDataService
 
 @if (!string.IsNullOrEmpty(userRole) && userRole.ToLower() == "admin" && !isError)
 {
-    <button @onclick="@(() => RedirectUser("caregiver"))">Redirect to Caregiver Page</button>
-    <button @onclick="@(() => RedirectUser("patient"))">Redirect to Patient Page</button>
+    <button @onclick="@(() => NavigationManager.NavigateTo("/patientpage"))">Go to Patient Page</button>
+
+    <button @onclick="@(() => NavigationManager.NavigateTo("/caregiverpage"))">Go to Caregiver Page</button>
+
 }
 
 @code {
@@ -18,6 +22,8 @@
     private string userRole;
     private string userEmail;
     private string userId;
+    private string firstName;
+    private string lastName;
     private bool isError = false;
     private string errorMessage;
 
@@ -33,7 +39,6 @@
                 {
                     userToken = await TokenService.ExchangeAuthorizationCodeForUserTokenAsync(code);
 
-                    // Nu kan du dekodera tokenet för att få roller eller annan information
                     var handler = new JwtSecurityTokenHandler();
                     var jsonToken = handler.ReadToken(userToken) as JwtSecurityToken;
                     var rolesClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Authorizationroles")?.Value;
@@ -42,7 +47,11 @@
                         //TODO Spara dessa värden till i DB. 
                         userRole = rolesClaim;
                         userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+                        firstName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "given_name")?.Value;
+                        lastName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "family_name")?.Value;
                         userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
+                        
+
                     }
                 }
                 else
@@ -65,10 +74,10 @@
                 switch (userRole.ToLower())
                 {
                     case "patient":
-                        NavigationManager.NavigateTo("/patientPage");
+                        RedirectUser(userRole, userId, userEmail, firstName, lastName);
                         break;
                     case "caregiver":
-                        NavigationManager.NavigateTo("/caregiverPage");
+                        RedirectUser(userRole, userId, userEmail, firstName, lastName);
                         break;
                     case "admin":
                         break;
@@ -78,20 +87,21 @@
                         break;
                 }
             }
-
-            StateHasChanged(); // Notify the component that its state has changed. 
-
-            //TODO Kalla på metoden på Annas Service metod. (SKICKA MED GUID)
+            StateHasChanged(); 
         }
     }
-    public void RedirectUser(string role)
+    public void RedirectUser(string role, string id, string email, string firstName, string lastName)
     {
         if (role == "patient")
         {
-            NavigationManager.NavigateTo("/patient");
+            PatientService.LogInPatient(id, firstName, lastName, email);
+
+            NavigationManager.NavigateTo("/patientpage");
         }
         else if (role == "caregiver")
         {
+
+
             NavigationManager.NavigateTo("/caregiver");
         }
     }

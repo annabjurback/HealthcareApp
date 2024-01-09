@@ -16,7 +16,7 @@ namespace HealthCare.Core
 			_controller = controller;
 		}
 
-		public void LogInPatient(Guid patientId, string firstName, string lastName, string email)
+		public void LogInPatient(string patientId, string firstName, string lastName, string email)
 		{
 			// save patient first if it doesnt exist in db
 			if(!_controller.PatientExists(patientId))

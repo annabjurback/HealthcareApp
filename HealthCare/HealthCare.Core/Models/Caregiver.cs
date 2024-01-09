@@ -10,7 +10,7 @@ namespace HealthCare.Core.Models
     public class Caregiver
     {
         [Key]
-        public Guid CaregiverId { get; set; }
+        public string CaregiverId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
