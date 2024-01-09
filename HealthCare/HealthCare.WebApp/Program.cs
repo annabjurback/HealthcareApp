@@ -7,7 +7,16 @@ using HealthCare.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+<<<<<<< HEAD
 builder.Services.AddRazorPages();
+=======
+// Add services to the container.
+
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AuthorizeFolder("/"); // Secures the root folder, requiring authorization by default
+});
+>>>>>>> develop
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
@@ -19,6 +28,9 @@ builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<HealthcareContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("HealthcareConnection")));
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddAuth0WebAppAuthentication(options => {
@@ -35,6 +47,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -45,5 +63,6 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+app.MapControllers();
 
 app.Run();
