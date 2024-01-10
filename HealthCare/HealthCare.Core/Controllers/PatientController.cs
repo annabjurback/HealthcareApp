@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCare.Core.Controllers
 {
-	[Route("/patient")]
-	//[ApiController]
+	//[Route("/patient")]
 	public class PatientController : ControllerBase
 	{
 		private readonly HealthcareContext _context;
@@ -21,28 +20,15 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
-		//[HttpGet("/patientexist")]
-		//public bool PatientExists(string patientId)
-		//{
-		//	if (_context.Patients.FirstOrDefault(x => x.PatientId == patientId) != null)
-		//	{
-		//		return true;
-		//	}
-		//	else
-		//	{
-		//		return false;
-		//	}
-		//}
-
 		[HttpPost("/savepatient")]
-		public ActionResult SavePatient(string patientId, string? firstName, string? lastName, string email)
+		public ActionResult SavePatient(string id, string? firstName, string? lastName, string email)
 		{
 			try
 			{
 				var Patient = new Patient
 				{
 					// for firstName and lastName: if value is null set empty string
-					PatientId = patientId,
+					PatientId = id,
 					FirstName = firstName ?? "",
 					LastName = lastName ?? "",
 					Email = email,
@@ -58,11 +44,11 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpGet("/patient")]
-		public ActionResult<Patient> GetPatient(string patientId)
+		public ActionResult<Patient> GetPatient(string id)
 		{
 			try
 			{
-				return Ok(_context.Patients.Single(x => x.PatientId == patientId));
+				return Ok(_context.Patients.Single(x => x.PatientId == id));
 			}
 			catch (Exception ex)
 			{
@@ -70,12 +56,12 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpPut("/patient")]
-		public ActionResult UpdatePatient(string patientId, string firstName, string lastName)
+		[HttpPut("/updatepatient")]
+		public ActionResult UpdatePatient(string id, string firstName, string lastName)
 		{
 			try
 			{
-				var patient = _context.Patients.Single(x => x.PatientId == patientId);
+				var patient = _context.Patients.Single(x => x.PatientId == id);
 				patient.FirstName = firstName;
 				patient.LastName = lastName;
 				_context.SaveChanges();
