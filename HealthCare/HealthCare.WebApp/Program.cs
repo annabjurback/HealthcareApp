@@ -12,10 +12,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddRazorPages(options =>
 {
-    options.Conventions.AuthorizeFolder("/"); // Secures the root folder, requiring authorization by default
+    /*options.Conventions.AuthorizeFolder("/"); */// Secures the root folder, requiring authorization by default
 });
 
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<Patient>();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
