@@ -59,6 +59,7 @@ namespace HealthCare.Core.Controllers
 		[HttpPut("/updatepatient")]
 		public ActionResult UpdatePatient(string id, string firstName, string lastName)
 		{
+			//fix error handling here!
 			try
 			{
 				var patient = _context.Patients.Single(x => x.PatientId == id);
