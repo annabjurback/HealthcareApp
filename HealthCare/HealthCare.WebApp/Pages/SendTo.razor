@@ -111,34 +111,38 @@
         var httpClient = new HttpClient(new HttpClientHandler());
 
         httpClient.BaseAddress = new Uri("https://localhost:7139/");
-        
+
         var getPatientResponse = await httpClient.GetAsync("/patient?id=" + id);
 
         // if patient id exist: (name check is on later page)
         if (getPatientResponse.IsSuccessStatusCode)
         {
-            // Process the successful response - patient should be returned
-            var result = await getPatientResponse.Content.ReadAsStringAsync();
-            // Do something with the result: typ skicka vidare pat?
+            // navigate to patientpage
+            NavigationManager.NavigateTo("/patientpage");
         }
         // if patient id doesnt exist: NotFound is returned, then save patient
         else if (getPatientResponse.StatusCode is HttpStatusCode.NotFound)
         {
             var query = new Dictionary<string, string>()
             {
-                ["patientId"] = id,
+                ["id"] = id,
                 ["firstName"] = firstName,
                 ["lastName"] = lastName,
                 ["email"] = email
             };
             var uri = QueryHelpers.AddQueryString("/savepatient", query);
             var savePatientResponse = await httpClient.PostAsync(uri, null);
-            // hantera errors här 
+
+            // ÄR DET DUMT ATT GÖRA SÅHÄR????
+            if(!savePatientResponse.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/Error");
+            }
         }
         else
         {
-            // hantera errors här också
-            // deets i response.StatusCode och response.ReasonPhrase
+            // ÄR DET DUMT ATT GÖRA SÅHÄR????
+            NavigationManager.NavigateTo("/Error");
         }
     }
 
