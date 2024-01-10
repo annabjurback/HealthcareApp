@@ -16,6 +16,7 @@ builder.Services.AddRazorPages();
 //});
 
 builder.Services.AddServerSideBlazor();
+builder.Services.AddScoped<Patient>();
 builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
