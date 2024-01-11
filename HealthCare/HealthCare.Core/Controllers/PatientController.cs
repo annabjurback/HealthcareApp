@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCare.Core.Controllers
 {
-	//[Route("/patient")]
+	[Route("/api/patient")]
 	public class PatientController : ControllerBase
 	{
 		private readonly HealthcareContext _context;
@@ -20,7 +20,7 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
-		[HttpPost("/savepatient")]
+		[HttpPost("")]
 		public ActionResult SavePatient(string id, string? firstName, string? lastName, string email)
 		{
 			try
@@ -43,7 +43,7 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpGet("/patient")]
+		[HttpGet("")]
 		public ActionResult<Patient> GetPatient(string id)
 		{
 			try
@@ -56,7 +56,7 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpPut("/updatepatient")]
+		[HttpPut("")]
 		public ActionResult UpdatePatient(string id, string firstName, string lastName)
 		{
 			//fix error handling here!

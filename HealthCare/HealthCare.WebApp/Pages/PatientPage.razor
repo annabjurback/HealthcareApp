@@ -22,7 +22,7 @@
 
 		var httpClient = new HttpClient(new HttpClientHandler());
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var getPatientResponse = await httpClient.GetAsync("/patient?id=" + userId);
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
 
 		if (getPatientResponse.IsSuccessStatusCode)
 		{

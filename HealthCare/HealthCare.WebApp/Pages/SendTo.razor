@@ -93,8 +93,7 @@
     {
         if (role == "patient")
         {
-            //PatientService.LogInPatient(id, firstName, lastName, email);
-            await GetPatient(id, firstName, lastName, email);
+            await LogInPatient(id, firstName, lastName, email);
             NavigationManager.NavigateTo("/patientpage");
         }
         else if (role == "caregiver")
@@ -105,13 +104,13 @@
         }
     }
 
-    private async Task GetPatient(string id, string firstName, string lastName, string email)
+    private async Task LogInPatient(string id, string firstName, string lastName, string email)
     {
         var httpClient = new HttpClient(new HttpClientHandler());
 
         httpClient.BaseAddress = new Uri("https://localhost:7139/");
 
-        var getPatientResponse = await httpClient.GetAsync("/patient?id=" + id);
+        var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + id);
 
         // if patient id exist: (name check is on later page)
         if (getPatientResponse.IsSuccessStatusCode)
@@ -129,10 +128,9 @@
                 ["lastName"] = lastName,
                 ["email"] = email
             };
-            var uri = QueryHelpers.AddQueryString("/savepatient", query);
+            var uri = QueryHelpers.AddQueryString("/api/patient", query);
             var savePatientResponse = await httpClient.PostAsync(uri, null);
 
-            // ÄR DET DUMT ATT GÖRA SÅHÄR????
             if(!savePatientResponse.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/Error");
@@ -140,7 +138,6 @@
         }
         else
         {
-            // ÄR DET DUMT ATT GÖRA SÅHÄR????
             NavigationManager.NavigateTo("/Error");
         }
     }
