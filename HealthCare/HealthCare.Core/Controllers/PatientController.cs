@@ -20,7 +20,7 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
-		[HttpPost("")]
+		[HttpPost]
 		public ActionResult SavePatient(string id, string? firstName, string? lastName, string email)
 		{
 			try
@@ -43,7 +43,7 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpGet("")]
+		[HttpGet]
 		public ActionResult<Patient> GetPatient(string id)
 		{
 			try
@@ -56,7 +56,7 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpPut("")]
+		[HttpPut]
 		public ActionResult UpdatePatient(string id, string firstName, string lastName)
 		{
 			//fix error handling here!
