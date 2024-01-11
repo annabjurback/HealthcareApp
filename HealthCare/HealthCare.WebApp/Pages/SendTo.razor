@@ -4,7 +4,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using System.IdentityModel.Tokens.Jwt
 @using HealthCare.Core
-@inject PatientService PatientService
+@using System.Net
 @inject TokenService TokenService
 @inject NavigationManager NavigationManager
 @inject UserDataService UserDataService
@@ -49,7 +49,7 @@
                         firstName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "given_name")?.Value;
                         lastName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "family_name")?.Value;
                         userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
-                        
+
 
                     }
                 }
@@ -89,12 +89,12 @@
             StateHasChanged(); 
         }
     }
-    public void RedirectUser(string role, string id, string email, string firstName, string lastName)
+    public async void RedirectUser(string role, string id, string email, string firstName, string lastName)
     {
         if (role == "patient")
         {
-            PatientService.LogInPatient(id, firstName, lastName, email);
-
+            //PatientService.LogInPatient(id, firstName, lastName, email);
+            await GetPatient(id, firstName, lastName, email);
             NavigationManager.NavigateTo("/patientpage");
         }
         else if (role == "caregiver")
@@ -104,5 +104,46 @@
             NavigationManager.NavigateTo("/caregiver");
         }
     }
+
+    private async Task GetPatient(string id, string firstName, string lastName, string email)
+    {
+        var httpClient = new HttpClient(new HttpClientHandler());
+
+        httpClient.BaseAddress = new Uri("https://localhost:7139/");
+
+        var getPatientResponse = await httpClient.GetAsync("/patient?id=" + id);
+
+        // if patient id exist: (name check is on later page)
+        if (getPatientResponse.IsSuccessStatusCode)
+        {
+            // navigate to patientpage
+            NavigationManager.NavigateTo("/patientpage");
+        }
+        // if patient id doesnt exist: NotFound is returned, then save patient
+        else if (getPatientResponse.StatusCode is HttpStatusCode.NotFound)
+        {
+            var query = new Dictionary<string, string>()
+            {
+                ["id"] = id,
+                ["firstName"] = firstName,
+                ["lastName"] = lastName,
+                ["email"] = email
+            };
+            var uri = QueryHelpers.AddQueryString("/savepatient", query);
+            var savePatientResponse = await httpClient.PostAsync(uri, null);
+
+            // ÄR DET DUMT ATT GÖRA SÅHÄR????
+            if(!savePatientResponse.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/Error");
+            }
+        }
+        else
+        {
+            // ÄR DET DUMT ATT GÖRA SÅHÄR????
+            NavigationManager.NavigateTo("/Error");
+        }
+    }
+
 }
 
