@@ -10,10 +10,10 @@ using HealthCare.Core.Models;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
-builder.Services.AddRazorPages(options =>
-{
-    /*options.Conventions.AuthorizeFolder("/"); */// Secures the root folder, requiring authorization by default
-});
+//builder.Services.AddRazorPages(options =>
+//{
+//    options.Conventions.AuthorizeFolder("/"); // Secures the root folder, requiring authorization by default
+//});
 
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<Patient>();
@@ -21,7 +21,6 @@ builder.Services.AddScoped<FeedbackService>();
 builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<UserDataService>();
-builder.Services.AddScoped<PatientService>();
 builder.Services.AddScoped<PatientController>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
