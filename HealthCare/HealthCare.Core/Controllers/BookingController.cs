@@ -47,7 +47,7 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<Booking>> GetBooking(string patientId)
+		public ActionResult<List<Booking>> GetBookings(string patientId)
 		{
 			try
 			{
