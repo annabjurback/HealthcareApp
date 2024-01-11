@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthCare.Core.Controllers
 {
-	[Route("/patient")]
-	//[ApiController]
+	[Route("/api/patient")]
 	public class PatientController : ControllerBase
 	{
 		private readonly HealthcareContext _context;
@@ -21,50 +20,58 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
-		[HttpGet("/patientexist")]
-		public bool PatientExists(Guid patientId)
+		[HttpPost]
+		public ActionResult SavePatient(string id, string? firstName, string? lastName, string email)
 		{
-			if (_context.Patients.Single(x => x.PatientId == patientId) != null)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		[HttpPost("/savepatient")]
-		public void SavePatient(Guid patientId, string firstName, string lastName, string email)
-		{
-			// dont forget error handling
-			var Patient = new Patient
-			{
-				PatientId = patientId,
-				FirstName = firstName,
-				LastName = lastName,
-				Email = email,
-			};
 			try
 			{
+				var Patient = new Patient
+				{
+					// for firstName and lastName: if value is null set empty string
+					PatientId = id,
+					FirstName = firstName ?? "",
+					LastName = lastName ?? "",
+					Email = email,
+				};
 				_context.Patients.Add(Patient);
 				_context.SaveChanges();
+				return Ok();
 			}
-			catch (DbUpdateException ex)
+			catch (Exception ex)
 			{
-				// inner exception
-				var innerException = ex.InnerException;
+				return BadRequest(ex.InnerException);
 			}
 		}
 
-		[HttpGet("/patient")]
-		public Patient GetPatient(Guid patientId)
+		[HttpGet]
+		public ActionResult<Patient> GetPatient(string id)
 		{
-			return _context.Patients.Single(x => x.PatientId == patientId);
+			try
+			{
+				return Ok(_context.Patients.Single(x => x.PatientId == id));
+			}
+			catch (Exception ex)
+			{
+				return NotFound(ex.InnerException);
+			}
 		}
-		//public ActionResult<Patient> GetPatient(string patientId)
-		//{
-		//	return Ok(_context.Patients.Single(x => x.PatientId == patientId));
-		//}
+
+		[HttpPut]
+		public ActionResult UpdatePatient(string id, string firstName, string lastName)
+		{
+			//fix error handling here!
+			try
+			{
+				var patient = _context.Patients.Single(x => x.PatientId == id);
+				patient.FirstName = firstName;
+				patient.LastName = lastName;
+				_context.SaveChanges();
+			}
+			catch (Exception ex)
+			{
+				return NotFound(ex.InnerException);
+			}
+			return Ok();
+		}
 	}
 }

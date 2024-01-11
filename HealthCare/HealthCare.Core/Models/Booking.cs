@@ -18,11 +18,11 @@ namespace HealthCare.Core.Models
         public bool Completed { get; set; }
 
 		[ForeignKey(nameof(Patient))]
-		public Guid PatientId { get; set; }
+		public string PatientId { get; set; }
         public Patient Patient { get; set; }
 
 		[ForeignKey(nameof(Caregiver))]
-		public Guid CaregiverId { get; set; }
+		public string CaregiverId { get; set; }
         public Caregiver Caregiver { get; set; }
     }
 

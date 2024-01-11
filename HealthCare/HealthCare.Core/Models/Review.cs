@@ -16,7 +16,7 @@ namespace HealthCare.Core.Models
         public int Rating { get; set; }
 
 		[ForeignKey(nameof(Patient))]
-		public Guid PatientId { get; set; }
+		public string PatientId { get; set; }
         public Patient Patient { get; set; }
     }
 }
