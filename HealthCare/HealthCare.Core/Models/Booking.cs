@@ -12,9 +12,9 @@ namespace HealthCare.Core.Models
         public DateTime End { get; set; }
         public string Note { get; set; }
 
-        [ForeignKey(nameof(Service))]
-        public int ServiceId { get; set; }
-        public Service Service { get; set; }
+        //[ForeignKey(nameof(Service))]
+        //public int ServiceId { get; set; }
+        //public Service Service { get; set; }
         public bool Completed { get; set; }
 
 		[ForeignKey(nameof(Patient))]

@@ -48,9 +48,6 @@ namespace HealthCare.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
@@ -59,8 +56,6 @@ namespace HealthCare.Core.Migrations
                     b.HasIndex("CaregiverId");
 
                     b.HasIndex("PatientId");
-
-                    b.HasIndex("ServiceId");
 
                     b.ToTable("Bookings");
                 });
@@ -135,23 +130,6 @@ namespace HealthCare.Core.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("HealthCare.Core.Models.Service", b =>
-                {
-                    b.Property<int>("ServiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ServiceId");
-
-                    b.ToTable("Services");
-                });
-
             modelBuilder.Entity("HealthCare.Core.Models.Booking", b =>
                 {
                     b.HasOne("HealthCare.Core.Models.Caregiver", "Caregiver")
@@ -166,17 +144,9 @@ namespace HealthCare.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HealthCare.Core.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Caregiver");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("HealthCare.Core.Models.Review", b =>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HealthCare.Core.Controllers
 {
-	[Route("/booking")]
+	[Route("/api/booking")]
 	public class BookingController : ControllerBase
 	{
 		private readonly HealthcareContext _context;
@@ -20,7 +20,7 @@ namespace HealthCare.Core.Controllers
 			_context = context;
 		}
 
-		[HttpPost("/createbooking")]
+		[HttpPost]
 		public ActionResult CreateBooking(DateTime start,string note, bool completed, string patientId, string caregiverId)
 		{
 			try
@@ -46,7 +46,7 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpGet("/getbooking")]
+		[HttpGet]
 		public ActionResult<List<Booking>> GetBooking(string patientId)
 		{
 			try
