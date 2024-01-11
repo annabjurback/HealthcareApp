@@ -3,7 +3,8 @@
 @inject HealthCare.Core.Models.Patient patient
 @page "/patientpage"
 @using HealthCare.WebApp.Services
-@inject HealthCare.Core.Controllers.PatientController patientController
+@using HealthCare.Core.Models
+@* @inject HealthCare.Core.Controllers.PatientController patientController *@
 
 @code {
 
@@ -14,7 +15,23 @@
 		userId = UserDataService.GetUserId();
 		//Hämta patientinformation
 		//Namn och kommande möten,
-		patient = patientController.GetPatient(userId);
+
+
+
+		// patient = patientController.GetPatient(userId);
+
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var getPatientResponse = await httpClient.GetAsync("/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			// nån sorts felhantering?
+		}
 	}
 
 	private async Task HandleButtonClick(int index)
