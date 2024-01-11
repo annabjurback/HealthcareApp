@@ -21,11 +21,11 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCaregiver(string caregiverId, string firstName, string lastName, string email)
+        public ActionResult CreateCaregiver(string id, string firstName, string lastName, string email)
         {
             Caregiver Caregiver = new()
             {
-                CaregiverId = caregiverId,
+                CaregiverId = id,
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
@@ -47,11 +47,11 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Caregiver> GetCaregiver(string caregiverId)
+        public ActionResult<Caregiver> GetCaregiver(string id)
         {
             try
             {
-                return _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+                return _context.Caregivers.Single(x => x.CaregiverId == id);
             }
             catch (Exception ex) 
             {
@@ -72,11 +72,11 @@ namespace HealthCare.Core.Controllers
             }
         }
         [HttpPut]
-        public ActionResult<Caregiver> EditCaregiver(string caregiverId, string firstName, string lastName)
+        public ActionResult<Caregiver> EditCaregiver(string id, string firstName, string lastName)
         {
             try
             {
-                var caregiver = _context.Caregivers.Single(x => x.CaregiverId == caregiverId);
+                var caregiver = _context.Caregivers.Single(x => x.CaregiverId == id);
                 caregiver.FirstName = firstName;
                 caregiver.LastName = lastName;
 
