@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HealthCare.Core.Controllers
 {
-    [Route("/caregiver")]
+    [Route("/api/caregiver")]
     public class CaregiverController : ControllerBase
     {
         private readonly HealthcareContext _context;
@@ -20,27 +20,7 @@ namespace HealthCare.Core.Controllers
             _context = context;
         }
 
-        [HttpGet("/caregiverexist")]
-        public ActionResult<bool> CaregiverExists(string caregiverId)
-        {
-            try
-            {
-                if (_context.Caregivers.Single(x => x.CaregiverId == caregiverId) != null)
-                {
-                    return Ok(true);
-                }
-                else
-                {
-                    return Ok(false);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("/createcaregiver")]
+        [HttpPost]
         public ActionResult CreateCaregiver(string caregiverId, string firstName, string lastName, string email)
         {
             Caregiver Caregiver = new()
@@ -66,7 +46,7 @@ namespace HealthCare.Core.Controllers
             }
         }
 
-        [HttpGet("/caregiver")]
+        [HttpGet]
         public ActionResult<Caregiver> GetCaregiver(string caregiverId)
         {
             try
@@ -79,7 +59,19 @@ namespace HealthCare.Core.Controllers
             }
         }
 
-        [HttpPut("/editcaregiver")]
+        [HttpGet("api/caregiver/getall")]
+        public ActionResult<List<Caregiver>> GetCaregivers()
+        {
+            try
+            {
+                return Ok(_context.Caregivers.ToList());
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+        [HttpPut]
         public ActionResult<Caregiver> EditCaregiver(string caregiverId, string firstName, string lastName)
         {
             try
