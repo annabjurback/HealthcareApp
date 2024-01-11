@@ -12,6 +12,7 @@
 
 @if (!string.IsNullOrEmpty(userRole) && userRole.ToLower() == "admin" && !isError)
 {
+    <p>You are admin choose which page you want to go to</p>
     <button @onclick="@(() => RedirectUserAsAdmin("patient"))">Go to Patient Page</button>
     <button @onclick="@(() => RedirectUserAsAdmin("caregiver"))">Go to Caregiver Page</button>
 }

@@ -26,8 +26,8 @@ namespace HealthCare.Core.Controllers
             Caregiver Caregiver = new()
             {
                 CaregiverId = id,
-                FirstName = firstName,
-                LastName = lastName,
+                FirstName = firstName ?? "",
+                LastName = lastName ?? "",
                 Email = email,
             };
             try
