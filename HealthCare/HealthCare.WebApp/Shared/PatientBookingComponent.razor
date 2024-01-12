@@ -8,7 +8,7 @@
 	{
 		var httpClient = new HttpClient(new HttpClientHandler());
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var getCaregiversResponse = await httpClient.GetAsync("getall");
+		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
 
 		if(getCaregiversResponse.IsSuccessStatusCode)
 		{
