@@ -1,4 +1,22 @@
-﻿
+﻿@using HealthCare.Core.Models
+@using System.Text.Json
+
+@code {
+	List<Caregiver> caregivers = new();
+
+	protected override async Task OnInitializedAsync()
+	{
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
+
+		if(getCaregiversResponse.IsSuccessStatusCode)
+		{
+			caregivers = await getCaregiversResponse.Content.ReadFromJsonAsync<List<Caregiver>>();
+		}
+	}
+}
+
 <div class="mobile_meeting_container">
 	<div class="mobile_meeting_info booking_date_container">
 		<input class="booking_style" type="datetime-local" @bind="Date" />
@@ -10,8 +28,13 @@
 
 	<div class="mobile_meeting_info booking_date_container">
 
-		<input class="booking_style" type="text" placeholder="Service" @bind="Service" />
-
+		<select class="booking_style">
+			<option value="" disabled selected>Select Caregiver</option>
+		@foreach (Caregiver caregiver in  caregivers)
+		{
+			<option value="@caregiver.CaregiverId">@caregiver.FirstName @caregiver.LastName</option>
+		}
+		</select>
 	</div>
 	<div class="mobile_meeting_info booking_date_container">
 		<select class="booking_style">
@@ -27,7 +50,7 @@
 
 	public string Name;
 	public DateTime Date;
-	public string Service;
+	public Caregiver Caregiver;
 
 	
 

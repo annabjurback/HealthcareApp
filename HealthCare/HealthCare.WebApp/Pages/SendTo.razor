@@ -8,12 +8,13 @@
 @inject TokenService TokenService
 @inject NavigationManager NavigationManager
 @inject UserDataService UserDataService
+@inject UserAccessService UserAccessService
 
 @if (!string.IsNullOrEmpty(userRole) && userRole.ToLower() == "admin" && !isError)
 {
-    <button @onclick="@(() => NavigationManager.NavigateTo("/patientpage"))">Go to Patient Page</button>
-
-    <button @onclick="@(() => NavigationManager.NavigateTo("/caregiverpage"))">Go to Caregiver Page</button>
+    <p>You are admin choose which page you want to go to</p>
+    <button @onclick="@(() => RedirectUserAsAdmin("patient"))">Go to Patient Page</button>
+    <button @onclick="@(() => RedirectUserAsAdmin("caregiver"))">Go to Caregiver Page</button>
 }
 
 @code {
@@ -43,14 +44,11 @@
                     var rolesClaim = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Authorizationroles")?.Value;
                     if (rolesClaim != null)
                     {
-                        //TODO Spara dessa värden till i DB. 
                         userRole = rolesClaim;
-                        userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "name")?.Value;
+                        userEmail = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "Email")?.Value;
                         firstName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "given_name")?.Value;
                         lastName = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "family_name")?.Value;
                         userId = jsonToken?.Claims.FirstOrDefault(claim => claim.Type == "sub")?.Value;
-
-
                     }
                 }
                 else
@@ -89,58 +87,27 @@
             StateHasChanged(); 
         }
     }
-    public async void RedirectUser(string role, string id, string email, string firstName, string lastName)
+
+    public async Task RedirectUser(string role, string id, string email, string firstName, string lastName)
     {
-        if (role == "patient")
+        if (role == "patient" || role == "caregiver")
         {
-            await LogInPatient(id, firstName, lastName, email);
-            NavigationManager.NavigateTo("/patientpage");
-        }
-        else if (role == "caregiver")
-        {
-
-
-            NavigationManager.NavigateTo("/caregiver");
-        }
-    }
-
-    private async Task LogInPatient(string id, string firstName, string lastName, string email)
-    {
-        var httpClient = new HttpClient(new HttpClientHandler());
-
-        httpClient.BaseAddress = new Uri("https://localhost:7139/");
-
-        var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + id);
-
-        // if patient id exist: (name check is on later page)
-        if (getPatientResponse.IsSuccessStatusCode)
-        {
-            // navigate to patientpage
-            NavigationManager.NavigateTo("/patientpage");
-        }
-        // if patient id doesnt exist: NotFound is returned, then save patient
-        else if (getPatientResponse.StatusCode is HttpStatusCode.NotFound)
-        {
-            var query = new Dictionary<string, string>()
-            {
-                ["id"] = id,
-                ["firstName"] = firstName,
-                ["lastName"] = lastName,
-                ["email"] = email
-            };
-            var uri = QueryHelpers.AddQueryString("/api/patient", query);
-            var savePatientResponse = await httpClient.PostAsync(uri, null);
-
-            if(!savePatientResponse.IsSuccessStatusCode)
-            {
-                NavigationManager.NavigateTo("/Error");
-            }
+            await UserAccessService.LogInUser(role, id, firstName, lastName, email);
+            NavigationManager.NavigateTo($"/{role}page");
         }
         else
         {
+            isError = true;
+            errorMessage = "Invalid user role.";
             NavigationManager.NavigateTo("/Error");
+
         }
     }
 
+    private async Task RedirectUserAsAdmin(string role)
+    {
+        await UserAccessService.LogInUser(role, userId, firstName, lastName, userEmail);
+        NavigationManager.NavigateTo($"/{role}page");
+    }
 }
 
