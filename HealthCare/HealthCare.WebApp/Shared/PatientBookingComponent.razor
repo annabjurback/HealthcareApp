@@ -1,11 +1,18 @@
 ﻿@using HealthCare.Core.Models
+@using HealthCare.WebApp.Services
 @using System.Text.Json
+@inject HealthCare.Core.Models.Patient patient
+@inject UserDataService UserDataService
 
 @code {
 	List<Caregiver> caregivers = new();
 
+	private string userId;
+
 	protected override async Task OnInitializedAsync()
 	{
+		userId = UserDataService.GetUserId();
+
 		var httpClient = new HttpClient(new HttpClientHandler());
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
 		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
@@ -14,49 +21,66 @@
 		{
 			caregivers = await getCaregiversResponse.Content.ReadFromJsonAsync<List<Caregiver>>();
 		}
+
+		 httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			// nån sorts felhantering?
+		}
 	}
 }
 
-<div class="mobile_meeting_container">
-	<div class="mobile_meeting_info booking_date_container">
-		<input class="booking_style" type="datetime-local" @bind="Date" />
-	</div>
+<form @onsubmit="BookAppointment">
+	<div class="mobile_meeting_container">
+		<div class="mobile_meeting_info booking_date_container">
+			<input class="booking_style" type="datetime-local" @bind="Date" required />
+		</div>
 
-	<div class="mobile_meeting_info booking_date_container">
-		<input class="booking_style" type="text" placeholder="Patient Name" @bind="Name" />
-	</div>
+		<div class="mobile_meeting_info booking_date_container">
+			<p>@patient.FirstName @patient.LastName</p>
+		</div>
 
-	<div class="mobile_meeting_info booking_date_container">
+		<div class="mobile_meeting_info booking_date_container">
+			<select @bind="CaregiverId" class="booking_style" required>
+				<option  disabled selected>Select Caregiver</option>
 
-		<select class="booking_style">
-			<option value="" disabled selected>Select Caregiver</option>
-		@foreach (Caregiver caregiver in  caregivers)
-		{
-			<option value="@caregiver.CaregiverId">@caregiver.FirstName @caregiver.LastName</option>
-		}
-		</select>
-	</div>
-	<div class="mobile_meeting_info booking_date_container">
-		<select class="booking_style">
-			<option value="General Checkup">District Nurse</option>
-			<option value="Vaccination">General Practitioner</option>
-		</select>
-	</div>
+				@foreach (Caregiver caregiver in caregivers)
+				{
+					<option value="@caregiver.CaregiverId">@caregiver.FirstName @caregiver.LastName</option>
+				}
+			</select>
+		</div>
 
-	<button class="home_button" @onclick="BookAppointment"><i class="fa-solid fa-circle-check"></i></button>
-</div>
+		<div class="mobile_meeting_info booking_date_container">
+			<input type="text" placeholder="Add note" @bind="Note" required />
+		</div>
+
+		<button type="submit" class="home_button"><i class="fa-solid fa-circle-check"></i></button>
+	</div>
+</form>
 
 @code {
 
 	public string Name;
-	public DateTime Date;
-	public Caregiver Caregiver;
+	public string Note;
+	public DateTime Date { get; set; } = DateTime.Now;
+	public bool Completed = false;
+	public string CaregiverId;
+	public string PatientId;
 
-	
-
-	public void BookAppointment()
+	public async void BookAppointment()
 	{
-		
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={userId}&caregiverId={CaregiverId}";
+		var getPatientResponse = await httpClient.PostAsync(apiEndpoint, null);	
 	}
 
 }
