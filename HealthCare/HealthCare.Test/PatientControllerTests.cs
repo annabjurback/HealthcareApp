@@ -1,6 +1,6 @@
 namespace HealthCare.Test
 {
-	public class UnitTest1
+	public class PatientControllerTests
 	{
 		[Fact]
 		public void Test1()

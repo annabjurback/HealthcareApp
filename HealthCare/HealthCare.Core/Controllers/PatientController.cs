@@ -7,17 +7,17 @@ using HealthCare.Core.Context;
 using Microsoft.EntityFrameworkCore;
 using HealthCare.Core.Models;
 using Microsoft.AspNetCore.Mvc;
+using HealthCare.Core.Repositories;
 
 namespace HealthCare.Core.Controllers
 {
-	[Route("/api/patient")]
+    [Route("/api/patient")]
 	public class PatientController : ControllerBase
 	{
-		private readonly HealthcareContext _context;
-
-		public PatientController(HealthcareContext context) 
+		private readonly IPatientRepository _patientRepository;
+		public PatientController(IPatientRepository patientRepository)
 		{
-			_context = context;
+			_patientRepository = patientRepository;
 		}
 
 		[HttpPost]
@@ -33,8 +33,8 @@ namespace HealthCare.Core.Controllers
 					LastName = lastName ?? "",
 					Email = email,
 				};
-				_context.Patients.Add(Patient);
-				_context.SaveChanges();
+
+				_patientRepository.SavePatient(Patient);
 				return Ok();
 			}
 			catch (Exception ex)
@@ -48,7 +48,7 @@ namespace HealthCare.Core.Controllers
 		{
 			try
 			{
-				return Ok(_context.Patients.Single(x => x.PatientId == id));
+				return Ok(_patientRepository.GetPatient(id));
 			}
 			catch (Exception ex)
 			{
@@ -62,10 +62,7 @@ namespace HealthCare.Core.Controllers
 			//fix error handling here!
 			try
 			{
-				var patient = _context.Patients.Single(x => x.PatientId == id);
-				patient.FirstName = firstName;
-				patient.LastName = lastName;
-				_context.SaveChanges();
+				_patientRepository.UpdatePatient(id, firstName, lastName);
 			}
 			catch (Exception ex)
 			{
