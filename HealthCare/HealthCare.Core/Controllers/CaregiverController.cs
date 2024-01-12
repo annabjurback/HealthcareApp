@@ -59,7 +59,7 @@ namespace HealthCare.Core.Controllers
             }
         }
 
-        [HttpGet("/getall")]
+        [HttpGet("/api/caregiver/getall")]
         public ActionResult<List<Caregiver>> GetAll()
         {
             try
