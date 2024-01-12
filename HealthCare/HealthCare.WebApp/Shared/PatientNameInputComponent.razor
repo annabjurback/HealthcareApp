@@ -1,17 +1,54 @@
-﻿<h3>Enter your name:</h3>
-<form>
-	<input type="text" @bind="firstName" placeholder="First name" />
-	<input type="text" @bind="lastName" placeholder="Last name" />
-
-</form>
-
+﻿@inject UserDataService UserDataService
+@inject NavigationManager NavigationManager
+@inject HealthCare.Core.Models.Patient patient
+@using HealthCare.WebApp.Services
 @using HealthCare.Core.Controllers;
-@code {
-	public string firstName;
-	public string lastName;
+@using Microsoft.AspNetCore.WebUtilities
 
-	public void SendPatientName()
+
+<h3>Please enter your name:</h3>
+<input type="text" @bind="firstName" placeholder="First name" />
+<input type="text" @bind="lastName" placeholder="Last name" />
+<button @onclick="SavePatientName">Save name</button>
+
+
+@code {
+	// [Parameter]
+	// public EventCallback<int> OnButtonClick { get; set; }
+
+	// [Parameter]
+	public string firstName { get; set; }
+
+	// [Parameter]
+	public string lastName { get; set; }
+
+	private string userId
 	{
-		
+		get { return userId; }
+		set { userId = UserDataService.GetUserId(); }
+	}
+
+	private async Task SavePatientName()
+	{
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+
+		var query = new Dictionary<string, string>()
+		{
+			["id"] = userId,
+			["firstName"] = firstName ?? "",
+			["lastName"] = lastName ?? ""
+		};
+
+		var uri = QueryHelpers.AddQueryString("/api/patient", query);
+		var savePatientResponse = await httpClient.PutAsync(uri, null);
+
+		if (!savePatientResponse.IsSuccessStatusCode)
+		{
+			NavigationManager.NavigateTo("/Error");
+		}
+		// antingen här elelr i patientpage saknas nåt. pats namn sparas inte i db iaf.. och vi hamnar i program.cs igen.. något skumt måste det vara här..
 	}
 }
+
+		
