@@ -1,16 +1,24 @@
-﻿namespace HealthCare.WebApp.Services;
+﻿using Blazored.LocalStorage;
+
+namespace HealthCare.WebApp.Services;
 
 public class UserDataService
 {
-    private string _userId;
+    private readonly ILocalStorageService _localStorage;
+    private const string UserIdKey = "UserId";
 
-    public void SetUserId(string userId)
+    public UserDataService(ILocalStorageService localStorage)
     {
-        _userId = userId;
+        _localStorage = localStorage;
     }
 
-    public string GetUserId()
+    public async Task SetUserIdAsync(string userId)
     {
-        return _userId;
+        await _localStorage.SetItemAsync(UserIdKey, userId);
+    }
+
+    public async Task<string> GetUserIdAsync()
+    {
+        return await _localStorage.GetItemAsync<string>(UserIdKey);
     }
 }
