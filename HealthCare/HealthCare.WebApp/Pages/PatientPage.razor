@@ -9,10 +9,14 @@
 @code {
 
 	private string userId;
+	private bool isFirstRender = true;
 
-	protected override async Task OnInitializedAsync()
+	
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	//Samma problem här som i get patient. så ändrade till en onafterrender och la till en bool flagga för att kolla
+	//om det var första gången.
 	{		
-		userId = UserDataService.GetUserId();
+		userId = await UserDataService.GetUserIdAsync();
 		//Hämta patientinformation
 		//Namn och kommande möten,
 
@@ -32,6 +36,7 @@
 		{
 			// nån sorts felhantering?
 		}
+		StateHasChanged();
 	}
 
 	private async Task HandleButtonClick(int index)
