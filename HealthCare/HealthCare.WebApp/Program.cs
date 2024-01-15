@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using HealthCare.WebApp.Services;
 using HealthCare.Core.Controllers;
 using HealthCare.Core.Models;
+using HealthCare.Core.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -23,6 +24,7 @@ builder.Services.AddScoped<AppointmentService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<UserDataService>();
 builder.Services.AddScoped<PatientController>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0Settings.SectionName));
