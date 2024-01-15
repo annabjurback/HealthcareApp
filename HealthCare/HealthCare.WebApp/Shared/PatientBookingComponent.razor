@@ -1,62 +1,123 @@
 ﻿@using HealthCare.Core.Models
+@using HealthCare.WebApp.Services
 @using System.Text.Json
+@inject NavigationManager Navigation
+@inject HealthCare.Core.Models.Patient patient
+@inject UserDataService UserDataService
 
 @code {
-	List<Caregiver> caregivers = new();
+	List<Caregiver> caregivers = new List<Caregiver>();
+
+
+	public string UserId { get; set; }
+
+	public bool BookingIsSuccessStatus = false;
+
+	public string Name;
+	public string Note;
+	public DateTime Date { get; set; } = DateTime.Now;
+	public bool Completed = false;
+	public string CaregiverId;
+	
 
 	protected override async Task OnInitializedAsync()
 	{
-		var httpClient = new HttpClient(new HttpClientHandler());
-		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		UserId = await UserDataService.GetUserIdAsync();
+
+		await LoadCaregivers();
+		await LoadPatient();
+	}
+
+	private async Task LoadCaregivers()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
 		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
 
-		if(getCaregiversResponse.IsSuccessStatusCode)
+		if (getCaregiversResponse.IsSuccessStatusCode)
 		{
 			caregivers = await getCaregiversResponse.Content.ReadFromJsonAsync<List<Caregiver>>();
 		}
 	}
-}
 
-<div class="mobile_meeting_container">
-	<div class="mobile_meeting_info booking_date_container">
-		<input class="booking_style" type="datetime-local" @bind="Date" />
-	</div>
-
-	<div class="mobile_meeting_info booking_date_container">
-		<input class="booking_style" type="text" placeholder="Patient Name" @bind="Name" />
-	</div>
-
-	<div class="mobile_meeting_info booking_date_container">
-
-		<select class="booking_style">
-			<option value="" disabled selected>Select Caregiver</option>
-		@foreach (Caregiver caregiver in  caregivers)
-		{
-			<option value="@caregiver.CaregiverId">@caregiver.FirstName @caregiver.LastName</option>
-		}
-		</select>
-	</div>
-	<div class="mobile_meeting_info booking_date_container">
-		<select class="booking_style">
-			<option value="General Checkup">District Nurse</option>
-			<option value="Vaccination">General Practitioner</option>
-		</select>
-	</div>
-
-	<button class="home_button" @onclick="BookAppointment"><i class="fa-solid fa-circle-check"></i></button>
-</div>
-
-@code {
-
-	public string Name;
-	public DateTime Date;
-	public Caregiver Caregiver;
-
-	
-
-	public void BookAppointment()
+	private async Task LoadPatient()
 	{
-		
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + UserId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			Navigation.NavigateTo("/error");
+		}
 	}
 
+	public async Task BookAppointment()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={UserId}&caregiverId={CaregiverId}";
+		var getPatientResponse = await httpClient.PostAsync(apiEndpoint, null);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			BookingIsSuccessStatus = true;
+		}
+	}
 }
+
+
+<form @onsubmit="BookAppointment">
+	<div class="mobile_meeting_container">
+		<div class="mobile_meeting_info booking_date_container">
+			<input class="booking_style" type="datetime-local" @bind="Date" required />
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<p>@patient.FirstName @patient.LastName</p>
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<select @bind="CaregiverId" class="booking_style" required>
+
+				<option value=""  disabled selected>Select Caregiver</option>
+
+				@foreach (Caregiver caregiver in caregivers)
+				{
+					<option value="@caregiver.CaregiverId" required>@caregiver.FirstName @caregiver.LastName</option>
+				}
+			</select>
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<input type="text" placeholder="Add note" @bind="Note" required />
+		</div>
+
+		<button type="submit" class="home_button"><i class="fa-solid fa-circle-check"></i></button>
+
+		@if (BookingIsSuccessStatus)
+		{
+				<i style="color:green"class="fa-solid fa-circle-check"></i>		
+		}
+	</div>
+</form>
+
+
+
+
