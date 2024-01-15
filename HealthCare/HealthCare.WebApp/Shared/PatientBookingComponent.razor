@@ -5,68 +5,11 @@
 @inject UserDataService UserDataService
 
 @code {
-	List<Caregiver> caregivers = new();
+	List<Caregiver> caregivers = new List<Caregiver>();
+	//Patient patient = new Patient(); // Deklarera patientvariabeln
 
+	public bool BookingIsSuccessStatus = false;
 	private string userId;
-
-	protected override async Task OnInitializedAsync()
-	{
-		userId = UserDataService.GetUserId();
-
-		var httpClient = new HttpClient(new HttpClientHandler());
-		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
-
-		if(getCaregiversResponse.IsSuccessStatusCode)
-		{
-			caregivers = await getCaregiversResponse.Content.ReadFromJsonAsync<List<Caregiver>>();
-		}
-
-		 httpClient = new HttpClient(new HttpClientHandler());
-		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
-
-		if (getPatientResponse.IsSuccessStatusCode)
-		{
-			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
-		}
-		else
-		{
-			// nån sorts felhantering?
-		}
-	}
-}
-
-<form @onsubmit="BookAppointment">
-	<div class="mobile_meeting_container">
-		<div class="mobile_meeting_info booking_date_container">
-			<input class="booking_style" type="datetime-local" @bind="Date" required />
-		</div>
-
-		<div class="mobile_meeting_info booking_date_container">
-			<p>@patient.FirstName @patient.LastName</p>
-		</div>
-
-		<div class="mobile_meeting_info booking_date_container">
-			<select @bind="CaregiverId" class="booking_style" required>
-				<option  disabled selected>Select Caregiver</option>
-
-				@foreach (Caregiver caregiver in caregivers)
-				{
-					<option value="@caregiver.CaregiverId">@caregiver.FirstName @caregiver.LastName</option>
-				}
-			</select>
-		</div>
-
-		<div class="mobile_meeting_info booking_date_container">
-			<input type="text" placeholder="Add note" @bind="Note" required />
-		</div>
-
-		<button type="submit" class="home_button"><i class="fa-solid fa-circle-check"></i></button>
-	</div>
-</form>
-
-@code {
 
 	public string Name;
 	public string Note;
@@ -75,12 +18,103 @@
 	public string CaregiverId;
 	public string PatientId;
 
-	public async void BookAppointment()
+	protected override async Task OnInitializedAsync()
 	{
-		var httpClient = new HttpClient(new HttpClientHandler());
-		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={userId}&caregiverId={CaregiverId}";
-		var getPatientResponse = await httpClient.PostAsync(apiEndpoint, null);	
+		userId = UserDataService.GetUserId();
+
+		await LoadCaregivers();
+		await LoadPatient();
 	}
 
+	private async Task LoadCaregivers()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var getCaregiversResponse = await httpClient.GetAsync("/api/caregiver/getall");
+
+		if (getCaregiversResponse.IsSuccessStatusCode)
+		{
+			caregivers = await getCaregiversResponse.Content.ReadFromJsonAsync<List<Caregiver>>();
+		}
+	}
+
+	private async Task LoadPatient()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			// Lägg till någon form av felhantering här
+		}
+	}
+
+	public async Task BookAppointment()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={userId}&caregiverId={CaregiverId}";
+		var getPatientResponse = await httpClient.PostAsync(apiEndpoint, null);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			Console.WriteLine("Lyckad bokning");
+			BookingIsSuccessStatus = true;
+		}
+	}
 }
+
+
+<form @onsubmit="BookAppointment">
+	<div class="mobile_meeting_container">
+		<div class="mobile_meeting_info booking_date_container">
+			<input class="booking_style" type="datetime-local" @bind="Date" required />
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<p>@patient.FirstName @patient.LastName</p>
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<select @bind="CaregiverId" class="booking_style" required>
+
+				<option  disabled selected>Select Caregiver</option>
+
+				@foreach (Caregiver caregiver in caregivers)
+				{
+					<option value="@caregiver.CaregiverId" required>@caregiver.FirstName @caregiver.LastName</option>
+				}
+			</select>
+		</div>
+
+		<div class="mobile_meeting_info booking_date_container">
+
+			<input type="text" placeholder="Add note" @bind="Note" required />
+		</div>
+
+		<button type="submit" class="home_button"><i class="fa-solid fa-circle-check"></i></button>
+	</div>
+</form>
+
+@if(BookingIsSuccessStatus){
+
+	<p>Bokningen lyckades</p>
+}
+
+
