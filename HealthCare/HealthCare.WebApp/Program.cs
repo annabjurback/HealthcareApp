@@ -7,6 +7,7 @@ using HealthCare.WebApp.Services;
 using HealthCare.Core.Controllers;
 using HealthCare.Core.Models;
 using HealthCare.Core.Repositories;
+using Blazored.LocalStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -15,6 +16,10 @@ builder.Services.AddRazorPages();
 //{
 //    options.Conventions.AuthorizeFolder("/"); // Secures the root folder, requiring authorization by default
 //});
+
+//För att kunna spara UserId i localstorage
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<UserDataService>();
 
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<Patient>();
