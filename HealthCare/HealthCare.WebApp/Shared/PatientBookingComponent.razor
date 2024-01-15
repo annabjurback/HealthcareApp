@@ -8,18 +8,21 @@
 @code {
 	List<Caregiver> caregivers = new List<Caregiver>();
 
+
+	public string UserId { get; set; }
+
 	public bool BookingIsSuccessStatus = false;
-	private string userId;
+
 	public string Name;
 	public string Note;
 	public DateTime Date { get; set; } = DateTime.Now;
 	public bool Completed = false;
 	public string CaregiverId;
-	public string PatientId;
+	
 
 	protected override async Task OnInitializedAsync()
 	{
-		userId = UserDataService.GetUserId();
+		UserId = await UserDataService.GetUserIdAsync();
 
 		await LoadCaregivers();
 		await LoadPatient();
@@ -47,7 +50,7 @@
 				BaseAddress = new Uri("https://localhost:7139/")
 			};
 
-		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + UserId);
 
 		if (getPatientResponse.IsSuccessStatusCode)
 		{
@@ -66,7 +69,7 @@
 				BaseAddress = new Uri("https://localhost:7139/")
 			};
 
-		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={userId}&caregiverId={CaregiverId}";
+		var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={UserId}&caregiverId={CaregiverId}";
 		var getPatientResponse = await httpClient.PostAsync(apiEndpoint, null);
 
 		if (getPatientResponse.IsSuccessStatusCode)
@@ -92,7 +95,7 @@
 
 			<select @bind="CaregiverId" class="booking_style" required>
 
-				<option  disabled selected>Select Caregiver</option>
+				<option value=""  disabled selected>Select Caregiver</option>
 
 				@foreach (Caregiver caregiver in caregivers)
 				{
@@ -110,8 +113,7 @@
 
 		@if (BookingIsSuccessStatus)
 		{
-
-			<h2 style="color:green">Booking was successful</h2>
+				<i style="color:green"class="fa-solid fa-circle-check"></i>		
 		}
 	</div>
 </form>
