@@ -1,15 +1,49 @@
 ﻿@inject NavigationManager Navigation
+@inject UserDataService UserDataService
+@inject HealthCare.Core.Models.Patient patient
+@using HealthCare.Core.Models
+@using HealthCare.WebApp.Services
+@using System.Text.Json
 @page "/booking"
 
 @code {
-	 private EventCallback<string> HomebuttonClicked { get; set; }
+	private EventCallback<string> HomebuttonClicked { get; set; }
+
+	private string userId;
+
+	protected override async Task OnInitializedAsync()
+	{
+		HomebuttonClicked = EventCallback.Factory.Create<string>(this, ReturnToPatientPage);
+
+		userId = await UserDataService.GetUserIdAsync();
+
+		await LoadPatient();
+	}
+
+	private async Task LoadPatient()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			Navigation.NavigateTo("/error");
+		}
+	}
 
 	private async Task ReturnToPatientPage()
 	{
 		Navigation.NavigateTo("/patientpage");
 		
 	}
-
 }
 
 <button class="home_button" type="button" @onclick="() => HomebuttonClicked.InvokeAsync()"><i class="fa-solid fa-house"></i></button>
@@ -17,15 +51,7 @@
 <div class="user_info_container">
 
 	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
-	<h1 id="user_name_display">Patient Name</h1>
+	<h1 id="user_name_display">@patient.Email</h1>
 </div>
 
 <PatientBookingComponent/>
-
-
-@code {
-	protected override void OnInitialized()
-	{
-		HomebuttonClicked = EventCallback.Factory.Create<string>(this, ReturnToPatientPage);
-	}
-}
