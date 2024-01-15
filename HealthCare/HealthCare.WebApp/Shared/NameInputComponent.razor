@@ -1,6 +1,7 @@
 ﻿@inject UserDataService UserDataService
 @inject NavigationManager NavigationManager
 @inject HealthCare.Core.Models.Patient patient
+@inject HealthCare.Core.Models.Caregiver caregiver
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Controllers;
 @using Microsoft.AspNetCore.WebUtilities
@@ -47,7 +48,6 @@
 		}
 
 		await OnNameSaved.InvokeAsync();
-		// antingen här elelr i patientpage saknas nåt. pats namn sparas inte i db iaf.. och vi hamnar i program.cs igen.. något skumt måste det vara här..
 	}
 }
 
