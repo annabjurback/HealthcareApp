@@ -9,40 +9,25 @@
 <h3>Please enter your name:</h3>
 <input type="text" @bind="firstName" placeholder="First name" />
 <input type="text" @bind="lastName" placeholder="Last name" />
-<button @onclick="SavePatientName">Save name</button>
+<button @onclick="SaveName">Save name</button>
 
 
 @code {
 	[Parameter]
 	public EventCallback<int> OnNameSaved { get; set; }
 
-	// [Parameter]
+	[Parameter]
+	public string Role { get; set; }
+
 	public string firstName { get; set; }
 
-	// [Parameter]
 	public string lastName { get; set; }
 
-	private string _userId;
+	private string userId;
 
-	public string userId
+	private async Task SaveName()
 	{
-		get { return _userId; }
-		set { 
-			value = UserDataService.GetUserId();
-			_userId = value; 
-			}
-	}
-
-	// protected async Task Delete_Click()
-	// {
-	// 	await EmployeeService.DeleteEmployee(Employee.EmployeeId);
-	// 	await OnEmployeeDeleted.InvokeAsync(Employee.EmployeeId);
-	// 	//NavigationManager.NavigateTo("/", true);
-	// }
-
-
-	private async Task SavePatientName()
-	{
+		userId = await UserDataService.GetUserIdAsync();
 		var httpClient = new HttpClient(new HttpClientHandler());
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
 
@@ -53,10 +38,10 @@
 			["lastName"] = lastName ?? ""
 		};
 
-		var uri = QueryHelpers.AddQueryString("/api/patient", query!);
-		var savePatientResponse = await httpClient.PutAsync(uri, null);
+			var uri = QueryHelpers.AddQueryString("/api/" + Role.ToLower(), query!);
+			var saveResponse = await httpClient.PutAsync(uri, null);
 
-		if (!savePatientResponse.IsSuccessStatusCode)
+		if (!saveResponse.IsSuccessStatusCode)
 		{
 			NavigationManager.NavigateTo("/Error");
 		}
