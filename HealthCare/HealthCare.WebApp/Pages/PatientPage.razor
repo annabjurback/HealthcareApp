@@ -51,6 +51,22 @@
 			//Navigation.NavigateTo("");
 		}
 	}
+
+	private async Task NameSaved()
+	{
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			// nån sorts felhantering?
+		}
+	}
 }
 
 @if (patient.FirstName == "" || patient.FirstName is null)

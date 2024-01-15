@@ -13,8 +13,8 @@
 
 
 @code {
-	// [Parameter]
-	// public EventCallback<int> OnButtonClick { get; set; }
+	[Parameter]
+	public EventCallback<int> OnNameSaved { get; set; }
 
 	// [Parameter]
 	public string firstName { get; set; }
@@ -22,11 +22,24 @@
 	// [Parameter]
 	public string lastName { get; set; }
 
-	private string userId
+	private string _userId;
+
+	public string userId
 	{
-		get { return userId; }
-		set { userId = UserDataService.GetUserId(); }
+		get { return _userId; }
+		set { 
+			value = UserDataService.GetUserId();
+			_userId = value; 
+			}
 	}
+
+	// protected async Task Delete_Click()
+	// {
+	// 	await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+	// 	await OnEmployeeDeleted.InvokeAsync(Employee.EmployeeId);
+	// 	//NavigationManager.NavigateTo("/", true);
+	// }
+
 
 	private async Task SavePatientName()
 	{
@@ -40,13 +53,15 @@
 			["lastName"] = lastName ?? ""
 		};
 
-		var uri = QueryHelpers.AddQueryString("/api/patient", query);
+		var uri = QueryHelpers.AddQueryString("/api/patient", query!);
 		var savePatientResponse = await httpClient.PutAsync(uri, null);
 
 		if (!savePatientResponse.IsSuccessStatusCode)
 		{
 			NavigationManager.NavigateTo("/Error");
 		}
+
+		await OnNameSaved.InvokeAsync();
 		// antingen här elelr i patientpage saknas nåt. pats namn sparas inte i db iaf.. och vi hamnar i program.cs igen.. något skumt måste det vara här..
 	}
 }
