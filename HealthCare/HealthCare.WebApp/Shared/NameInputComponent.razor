@@ -1,25 +1,24 @@
 ﻿@inject UserDataService UserDataService
 @inject NavigationManager NavigationManager
-@inject HealthCare.Core.Models.Patient patient
-@inject HealthCare.Core.Models.Caregiver caregiver
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Controllers;
 @using Microsoft.AspNetCore.WebUtilities
 
 
 <h3>Please enter your name</h3>
-<input type="text" @bind="firstName" placeholder="First name" />
-<input type="text" @bind="lastName" placeholder="Last name" />
-@if (Role == @caregiver.GetType().Name)
-{
-	<h3>Please select your role</h3>
-	<select @bind="caregiverRole">
-		<option value="district nurse">District nurse</option>
-		<option value="general practitioner">General practitioner</option>
-	</select>
-}
-<button @onclick="SaveName">Save</button>
-<p>kapsla in i ett form!</p>
+<form>
+	<input type="text" @bind="firstName" placeholder="First name" />
+	<input type="text" @bind="lastName" placeholder="Last name" />
+	@if (Role == "caregiver")
+	{
+		<h3>Please select your role</h3>
+		<select @bind="caregiverRole">
+			<option value="district nurse">District nurse</option>
+			<option value="general practitioner">General practitioner</option>
+		</select>
+	}
+	<button @onclick="SaveName">Save</button>
+</form>
 
 @code {
 	[Parameter]
@@ -43,19 +42,19 @@
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
 
 		var query = new Dictionary<string, string>()
-		{
-			["id"] = userId,
-			["firstName"] = firstName ?? "",
-			["lastName"] = lastName ?? ""
-		};
+			{
+				["id"] = userId,
+				["firstName"] = firstName ?? "",
+				["lastName"] = lastName ?? ""
+			};
 
-		if (Role == caregiver.GetType().Name)
+		if (Role == "caregiver")
 		{
 			query.Add("role", caregiverRole!);
 		}
 
-			var uri = QueryHelpers.AddQueryString("/api/" + Role.ToLower(), query!);
-			var saveResponse = await httpClient.PutAsync(uri, null);
+		var uri = QueryHelpers.AddQueryString("/api/" + Role.ToLower(), query!);
+		var saveResponse = await httpClient.PutAsync(uri, null);
 
 		if (!saveResponse.IsSuccessStatusCode)
 		{
@@ -66,4 +65,3 @@
 	}
 }
 
-		
