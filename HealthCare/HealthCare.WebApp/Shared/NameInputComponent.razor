@@ -7,11 +7,19 @@
 @using Microsoft.AspNetCore.WebUtilities
 
 
-<h3>Please enter your name:</h3>
+<h3>Please enter your name</h3>
 <input type="text" @bind="firstName" placeholder="First name" />
 <input type="text" @bind="lastName" placeholder="Last name" />
-<button @onclick="SaveName">Save name</button>
-
+@if (Role == @caregiver.GetType().Name)
+{
+	<h3>Please select your role</h3>
+	<select @bind="caregiverRole">
+		<option value="district nurse">District nurse</option>
+		<option value="general practitioner">General practitioner</option>
+	</select>
+}
+<button @onclick="SaveName">Save</button>
+<p>kapsla in i ett form!</p>
 
 @code {
 	[Parameter]
@@ -23,6 +31,8 @@
 	public string firstName { get; set; }
 
 	public string lastName { get; set; }
+
+	public string? caregiverRole { get; set; }
 
 	private string userId;
 
@@ -38,6 +48,11 @@
 			["firstName"] = firstName ?? "",
 			["lastName"] = lastName ?? ""
 		};
+
+		if (Role == caregiver.GetType().Name)
+		{
+			query.Add("role", caregiverRole!);
+		}
 
 			var uri = QueryHelpers.AddQueryString("/api/" + Role.ToLower(), query!);
 			var saveResponse = await httpClient.PutAsync(uri, null);
