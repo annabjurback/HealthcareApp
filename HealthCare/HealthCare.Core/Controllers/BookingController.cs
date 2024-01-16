@@ -47,11 +47,11 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<List<Booking>> GetBookings(string patientId)
+		public ActionResult<List<Booking>> GetBookings(string Id)
 		{
 			try
 			{
-				var bookings = _context.Bookings.Where(p => p.PatientId == patientId).ToList();
+				var bookings = _context.Bookings.Where(p => p.PatientId == Id).ToList();
 
 				return Ok(bookings);
 			}
