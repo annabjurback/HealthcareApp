@@ -8,7 +8,7 @@
 
 @code {
 
-	private string userId;
+	public string userId;
 	private bool isFirstRender = true;
 
 	
@@ -17,13 +17,7 @@
 	//om det var första gången.
 	{		
 		userId = await UserDataService.GetUserIdAsync();
-		//Hämta patientinformation
-		//Namn och kommande möten,
-
-
-
-		// patient = patientController.GetPatient(userId);
-
+		
 		var httpClient = new HttpClient(new HttpClientHandler());
 		httpClient.BaseAddress = new Uri("https://localhost:7139/");
 		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);

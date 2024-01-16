@@ -1,12 +1,67 @@
-﻿
-<div class="mobile_meeting_info">
-	<div class="mobile_meeting_icon"><i class="@Icon"></i></div>
-	<span class="meeting_text">text</span>
-	
-</div>
+﻿@using HealthCare.Core.Models
+@inject UserDataService UserDataService
+@inject NavigationManager Navigation
+@using HealthCare.WebApp.Services
 
+
+@if( UpcomingMeetings.Count() == 0){
+
+	<div class="mobile_meeting_info">
+		<span class="meeting_text">No upcoming meetings</span>
+	</div>
+}
+else
+{
+	@foreach (var meeting in UpcomingMeetings)
+	{
+		<div class="mobile_meeting_info">
+
+			<div class="mobile_meeting_icon"><i class="@Icon"></i></div>
+			<span class="meeting_text">@meeting.Start.Date.ToShortDateString() @meeting.Start.Hour:@meeting.Start.Minute</span>
+		</div>
+	}
+
+}
+
+
+	
 @code {
 
 	[Parameter]
 	public string Icon { get; set; }
+
+	public string UserId { get; set; }
+
+	List<Booking> Meetings = new List<Booking>();
+
+	List<Booking> UpcomingMeetings = new List<Booking>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		UserId = await UserDataService.GetUserIdAsync();
+		await LoadMeetings();
+	}
+
+	public async Task LoadMeetings()
+	{
+		using var httpClient = new HttpClient(new HttpClientHandler())
+			{
+				BaseAddress = new Uri("https://localhost:7139/")
+			};
+
+		var getMeetingResponse = await httpClient.GetAsync("/api/booking?Id=" + UserId);
+
+		if (getMeetingResponse.IsSuccessStatusCode)
+		{
+			DateTime today = DateTime.Today;
+
+			Meetings = await getMeetingResponse.Content.ReadFromJsonAsync<List<Booking>>();
+
+			UpcomingMeetings = Meetings.FindAll(meeting => meeting.Start >= today);
+		}
+		else
+		{
+			Navigation.NavigateTo("/Error");
+		}
+	}
 }
