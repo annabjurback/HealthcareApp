@@ -21,7 +21,7 @@ namespace HealthCare.Core.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCaregiver(string id, string firstName, string lastName, string email)
+        public ActionResult CreateCaregiver(string id, string firstName, string lastName, string email, string role)
         {
             Caregiver Caregiver = new()
             {
@@ -29,6 +29,7 @@ namespace HealthCare.Core.Controllers
                 FirstName = firstName ?? "",
                 LastName = lastName ?? "",
                 Email = email,
+                Role = role
             };
             try
             {
@@ -72,13 +73,14 @@ namespace HealthCare.Core.Controllers
             }
         }
         [HttpPut]
-        public ActionResult<Caregiver> EditCaregiver(string id, string firstName, string lastName)
+        public ActionResult<Caregiver> EditCaregiver(string id, string firstName, string lastName, string role)
         {
             try
             {
                 var caregiver = _context.Caregivers.Single(x => x.CaregiverId == id);
                 caregiver.FirstName = firstName;
                 caregiver.LastName = lastName;
+                caregiver.Role = role;
 
                 _context.SaveChanges();
 
