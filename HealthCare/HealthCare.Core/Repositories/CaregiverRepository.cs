@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HealthCare.Core.Repositories
 {
-	internal class CaregiverRepository : ICaregiverRepository
+	public class CaregiverRepository : ICaregiverRepository
 	{
 		private readonly HealthcareContext _context;
         public CaregiverRepository(HealthcareContext context)

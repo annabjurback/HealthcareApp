@@ -30,6 +30,7 @@ builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<UserDataService>();
 builder.Services.AddScoped<PatientController>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<ICaregiverRepository, CaregiverRepository>();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddScoped<TokenService>();
 builder.Services.Configure<Auth0Settings>(builder.Configuration.GetSection(Auth0Settings.SectionName));
