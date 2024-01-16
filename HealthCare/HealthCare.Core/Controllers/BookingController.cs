@@ -1,5 +1,6 @@
 ﻿using HealthCare.Core.Context;
 using HealthCare.Core.Models;
+using HealthCare.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ namespace HealthCare.Core.Controllers
 	[Route("/api/booking")]
 	public class BookingController : ControllerBase
 	{
-		private readonly HealthcareContext _context;
+		private readonly IBookingRepository _bookingRepository;
 
-		public BookingController(HealthcareContext context)
+		public BookingController(IBookingRepository bookingRepository)
 		{
-			_context = context;
+			_bookingRepository = bookingRepository;
 		}
 
 		[HttpPost]
@@ -35,8 +36,7 @@ namespace HealthCare.Core.Controllers
 					CaregiverId = caregiverId
 				};
 
-				_context.Add(booking);
-				_context.SaveChanges();
+				_bookingRepository.CreateBooking(booking);
 
 				return Ok();
 			}
@@ -51,7 +51,7 @@ namespace HealthCare.Core.Controllers
 		{
 			try
 			{
-				var bookings = _context.Bookings.Where(p => p.PatientId == Id).ToList();
+				var bookings = _bookingRepository.GetBookings(Id);
 
 				return Ok(bookings);
 			}
