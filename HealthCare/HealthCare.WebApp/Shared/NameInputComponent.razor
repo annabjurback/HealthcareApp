@@ -1,0 +1,67 @@
+﻿@inject UserDataService UserDataService
+@inject NavigationManager NavigationManager
+@using HealthCare.WebApp.Services
+@using HealthCare.Core.Controllers;
+@using Microsoft.AspNetCore.WebUtilities
+
+
+<h3>Please enter your name</h3>
+<form>
+	<input type="text" @bind="firstName" placeholder="First name" />
+	<input type="text" @bind="lastName" placeholder="Last name" />
+	@if (Role == "caregiver")
+	{
+		<h3>Please select your role</h3>
+		<select @bind="caregiverRole">
+			<option value="district nurse">District nurse</option>
+			<option value="general practitioner">General practitioner</option>
+		</select>
+	}
+	<button @onclick="SaveName">Save</button>
+</form>
+
+@code {
+	[Parameter]
+	public EventCallback<int> OnNameSaved { get; set; }
+
+	[Parameter]
+	public string Role { get; set; }
+
+	public string firstName { get; set; }
+
+	public string lastName { get; set; }
+
+	public string? caregiverRole { get; set; }
+
+	private string userId;
+
+	private async Task SaveName()
+	{
+		userId = await UserDataService.GetUserIdAsync();
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+
+		var query = new Dictionary<string, string>()
+			{
+				["id"] = userId,
+				["firstName"] = firstName ?? "",
+				["lastName"] = lastName ?? ""
+			};
+
+		if (Role == "caregiver")
+		{
+			query.Add("role", caregiverRole!);
+		}
+
+		var uri = QueryHelpers.AddQueryString("/api/" + Role.ToLower(), query!);
+		var saveResponse = await httpClient.PutAsync(uri, null);
+
+		if (!saveResponse.IsSuccessStatusCode)
+		{
+			NavigationManager.NavigateTo("/Error");
+		}
+
+		await OnNameSaved.InvokeAsync();
+	}
+}
+

@@ -4,6 +4,7 @@
 @page "/patientpage"
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Models
+@using System
 @* @inject HealthCare.Core.Controllers.PatientController patientController *@
 
 @code {
@@ -11,7 +12,6 @@
 	public string userId;
 	private bool isFirstRender = true;
 
-	
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	//Samma problem här som i get patient. så ändrade till en onafterrender och la till en bool flagga för att kolla
 	//om det var första gången.
@@ -51,39 +51,57 @@
 		}
 		else if (index == 3)
 		{
-			//send to Feedback page 
+			//send to Feedback page
 			//Navigation.NavigateTo("");
+		}
+	}
+
+	private async Task NameSaved()
+	{
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var getPatientResponse = await httpClient.GetAsync("/api/patient?id=" + userId);
+
+		if (getPatientResponse.IsSuccessStatusCode)
+		{
+			patient = await getPatientResponse.Content.ReadFromJsonAsync<Patient>();
+		}
+		else
+		{
+			// nån sorts felhantering?
 		}
 	}
 }
 
-<div class="user_info_container">
-	<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
-	@*Visar email ist för namn tillsvidare*@
-	<h1 id="user_name_display">@patient.Email</h1>
-</div>
+@if (patient.FirstName == "" || patient.FirstName is null)
+{
+	<NameInputComponent Role=@patient.GetType().Name></NameInputComponent>
+}
+else
+{
+	<div class="user_info_container">
+		<img id="user_img" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-PNG-Photos.png" />
+		<h1 id="user_name_display"><span>@patient.FirstName</span> <span>@patient.LastName</span></h1>
+	</div>
 
-<div class="mobile_button_container">
+	<div class="mobile_button_container">
 
-	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="0"
-		ButtonText="Booking" Icon="fa-solid fa-heart-pulse" />
-	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="1" ButtonText="Inbox" Icon="fa-solid fa-comment"/>
-	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="2" ButtonText="My Profile" Icon="fa-solid fa-user"/>
-	<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="3" ButtonText="Feedback" Icon="fa-solid fa-star" />
+		<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="0"
+							   ButtonText="Booking" Icon="fa-solid fa-heart-pulse" />
+		<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="1" ButtonText="Inbox" Icon="fa-solid fa-comment" />
+		<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="2" ButtonText="My Profile" Icon="fa-solid fa-user" />
+		<MobileButtonComponent OnButtonClick="HandleButtonClick" ButtonIndex="3" ButtonText="Feedback" Icon="fa-solid fa-star" />
+	</div>
 
-</div>
+	<div class="mobile_title_container">
+		<h2 class="mobile_title">Upcoming meetings</h2>
+	</div>
 
-<div class="mobile_title_container">
-
-<h2 class="mobile_title">Upcoming meetings</h2>
-
-</div>
-
-<div class="mobile_meeting_container">
-	@*//Hämta information om möte från databas
+	<div class="mobile_meeting_container">
+		@*//Hämta information om möte från databas
 	//Loopa ut antal möten *@
-	<MobileMeetingComponent Icon="fa-solid fa-calendar-days"/>
-
-</div>
+		<MobileMeetingComponent Icon="fa-solid fa-calendar-days" />
+	</div>
+}
 
 
