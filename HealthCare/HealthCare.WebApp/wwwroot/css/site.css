@@ -1,7 +1,126 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #C7DCE2;
+    max-width: 90%;
+}
+/*
+Caregiverpage*/
+
+.top-banner {
+
+    position: relative;
+    width: 100vw;
+    height: 30vh;
+    overflow: hidden;
+}
+    .top-banner img {     
+
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover; 
+    }
+
+.navigation {
+
+    display: flex;
+    padding: 10px;
+    background: rgb(135,192,203);
+    background: linear-gradient(0deg, rgba(135,192,203,1) 16%, rgba(88,152,164,1) 98%);
+}
+
+.nav_button {
+    font-weight: bold;
+    margin-right: 50px;
+    width: 100px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #F1ECEC;
+    color: #333;
+    cursor: pointer;
+    border-radius: 21px;
+    box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+}
+
+.navigation button {
+    margin-right: 50px;
+    width: 156px;
+    padding: 10px 20px;
+    border: none;
+    background: rgb(133,190,200);
+    background: linear-gradient(0deg, rgba(133,190,200,1) 16%, rgba(255,255,255,1) 98%);
+    color: white;
+    font-weight:bold;
+   
+    cursor: pointer;
+    border-radius: 21px;
+    box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+}
+
+.sub-navigation {
+    background-color: white;
+    border-radius: 21px;
+    margin-top: 10px;
+    margin-right: 80px;
+    margin-left: 80px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+   
+}
+
+.week-view {
+
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #C7DCE2;
+    flex: 1;
+    margin-left:65px;
+    margin-right:65px;
+}
+
+.day-container {
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    margin: 5px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
+    min-height: 55vh;
+}
+
+.day-label {
+    color: #333;
+    padding: 5px;
+    text-align: center;
+    font-weight: bold;
+    height: 39px;
+    width:95%;
+    margin: 3%;
+    background-color: #F1ECEC;
+    border-radius: 15px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.day-content {
+    padding: 20px;
+    flex-grow: 1;
 }
 
 @media only screen and (max-width: 767px) {
