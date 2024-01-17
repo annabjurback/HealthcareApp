@@ -22,7 +22,7 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CreateBooking(DateTime start,string note, bool completed, string patientId, string caregiverId)
+		public ActionResult CreateBooking(DateTime start,string note, bool completed, string? patientId, string caregiverId)
 		{
 			try
 			{
@@ -40,10 +40,11 @@ namespace HealthCare.Core.Controllers
 
 				return Ok();
 			}
-			catch 
+			catch(Exception ex)
 			{
-				return NotFound();
+				return BadRequest(ex.InnerException);
 			}
+
 		}
 
 		[HttpGet]
