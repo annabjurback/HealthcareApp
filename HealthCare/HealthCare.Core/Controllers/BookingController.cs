@@ -61,5 +61,18 @@ namespace HealthCare.Core.Controllers
 				return NotFound();
 			}
 		}
+
+		[HttpGet("/api/booking/getAvailableAppointments")]
+		public ActionResult<List<Booking>> GetAvailableAppointments(string? Id)
+		{
+			try
+			{
+				return _bookingRepository.GetAvailableAppointments(Id);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.InnerException);
+			}
+		}
 	}
 }
