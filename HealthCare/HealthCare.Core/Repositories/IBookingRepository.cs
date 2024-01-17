@@ -11,5 +11,6 @@ namespace HealthCare.Core.Repositories
 	{
 		void CreateBooking(Booking booking);
 		List<Booking> GetBookings(string id);
+		List<Booking> GetAvailableAppointments(string? caregiverId);
 	}
 }
