@@ -17,8 +17,7 @@ namespace HealthCare.Core.Models
         //public Service Service { get; set; }
         public bool Completed { get; set; }
 
-		[ForeignKey(nameof(Patient))]
-		public string PatientId { get; set; }
+		public string? PatientId { get; set; }
         public Patient Patient { get; set; }
 
 		[ForeignKey(nameof(Caregiver))]
