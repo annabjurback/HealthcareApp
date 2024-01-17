@@ -1,5 +1,6 @@
 ﻿using HealthCare.Core.Context;
 using HealthCare.Core.Models;
+using HealthCare.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,11 +14,10 @@ namespace HealthCare.Core.Controllers
     [Route("/api/caregiver")]
     public class CaregiverController : ControllerBase
     {
-        private readonly HealthcareContext _context;
-
-        public CaregiverController(HealthcareContext context)
+        private readonly ICaregiverRepository _caregiverRepository;
+        public CaregiverController(ICaregiverRepository caregiverRepository)
         {
-            _context = context;
+            _caregiverRepository = caregiverRepository;
         }
 
         [HttpPost]
@@ -33,8 +33,7 @@ namespace HealthCare.Core.Controllers
             };
             try
             {
-                _context.Caregivers.Add(Caregiver);
-                _context.SaveChanges();
+                _caregiverRepository.CreateCaregiver(Caregiver);
 
                 return Ok();
             }
@@ -52,7 +51,7 @@ namespace HealthCare.Core.Controllers
         {
             try
             {
-                return _context.Caregivers.Single(x => x.CaregiverId == id);
+                return _caregiverRepository.GetCaregiver(id);
             }
             catch (Exception ex) 
             {
@@ -65,7 +64,7 @@ namespace HealthCare.Core.Controllers
         {
             try
             {
-                return Ok(_context.Caregivers.ToList());
+                return Ok(_caregiverRepository.GetAll());
             }
             catch (Exception ex)
             {
@@ -77,14 +76,7 @@ namespace HealthCare.Core.Controllers
         {
             try
             {
-                var caregiver = _context.Caregivers.Single(x => x.CaregiverId == id);
-                caregiver.FirstName = firstName;
-                caregiver.LastName = lastName;
-                caregiver.Role = role;
-
-                _context.SaveChanges();
-
-                return Ok(caregiver);
+                return Ok(_caregiverRepository.EditCaregiver(id, firstName, lastName, role));
             }
             catch (Exception ex)
             {
