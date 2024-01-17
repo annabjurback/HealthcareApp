@@ -210,6 +210,7 @@ Caregiverpage*/
     }
 
     .mobile_meeting_info {
+        padding: 10px;
         display: flex;
         align-items: center;
         width: 285px;
@@ -283,6 +284,8 @@ Caregiverpage*/
         display: grid;
         place-self: flex-start;
         background-color: white;
+        color: rgb(82,166,188);
+        font-weight:bold;
         border: none;
         border-radius: 21px;
         width: 60px;

@@ -5,10 +5,12 @@
 @using Microsoft.AspNetCore.WebUtilities
 
 
-<h3>Please enter your name</h3>
-<form>
-	<input type="text" @bind="firstName" placeholder="First name" />
-	<input type="text" @bind="lastName" placeholder="Last name" />
+
+<form class="mobile_meeting_container">
+	<h3 class="mobile_title">Please enter your name</h3>
+	<input class="mobile_meeting_info" type="text" @bind="firstName" placeholder="First name" />
+	<input class="mobile_meeting_info" type="text" @bind="lastName" placeholder="Last name" />
+
 	@if (Role == "caregiver")
 	{
 		<h3>Please select your role</h3>
@@ -17,7 +19,7 @@
 			<option value="general practitioner">General practitioner</option>
 		</select>
 	}
-	<button @onclick="SaveName">Save</button>
+	<button class="home_button" @onclick="SaveName">Save</button>
 </form>
 
 @code {
