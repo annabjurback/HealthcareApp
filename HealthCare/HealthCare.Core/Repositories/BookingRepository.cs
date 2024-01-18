@@ -39,5 +39,12 @@ namespace HealthCare.Core.Repositories
 		{
 			return _context.Bookings.Where(p => p.PatientId == id).ToList();
 		}
-	}
+
+        public List<Booking> GetBookingsForCaregivers(string id)
+        {
+            return _context.Bookings.Where(p => p.CaregiverId == id).ToList();
+        }
+
+    }
 }
+
