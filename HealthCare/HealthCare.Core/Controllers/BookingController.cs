@@ -62,7 +62,22 @@ namespace HealthCare.Core.Controllers
 			}
 		}
 
-		[HttpGet("/api/booking/getAvailableAppointments")]
+        [HttpGet("/api/booking/getAllBookingsForCaregivers")]
+        public ActionResult<List<Booking>> GetBookingsCaregiver(string Id)
+        {
+            try
+            {
+                var bookings = _bookingRepository.GetBookingsForCaregivers(Id);
+
+                return Ok(bookings);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("/api/booking/getAvailableAppointments")]
 		public ActionResult<List<Booking>> GetAvailableAppointments(string? Id)
 		{
 			try

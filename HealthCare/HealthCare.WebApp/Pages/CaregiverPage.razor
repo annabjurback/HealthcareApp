@@ -11,8 +11,9 @@
     public string Note = null;
     public bool Completed = false;
     public string PatientID = null;
-    public bool CanBeBooked = false;
+    public bool CanBeBooked = true;
     public List<Booking> Bookings = new List<Booking>();
+    public bool ShowError = false;
 
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -23,7 +24,7 @@
 
     public async Task CreateEmptyMeeting(){
 
-        CheckOverlapingTimeInCalender(Date);
+       await CheckOverlapingTimeInCalender(Date);
 
         using var httpClient = new HttpClient(new HttpClientHandler())
             {
@@ -37,18 +38,16 @@
         }
     }
 
-    public async Task CheckOverlapingTimeInCalender(DateTime Date)
+    public async Task<bool> CheckOverlapingTimeInCalender(DateTime Date)
     {
         using var httpClient = new HttpClient(new HttpClientHandler())
             {
                 BaseAddress = new Uri("https://localhost:7139/")
             };
 
-        var apiEndpoint = $"/api/booking?Id={CaregiverId}";
+        var apiEndpoint = $"/api/booking/getAllBookingsForCaregivers?Id={CaregiverId}";
         var getBookingResponse = await httpClient.GetAsync(apiEndpoint);
 
-        if (getBookingResponse.IsSuccessStatusCode)
-        {
             Bookings = await getBookingResponse.Content.ReadFromJsonAsync<List<Booking>>();
 
             foreach(var meting in Bookings)
@@ -56,15 +55,16 @@
                 if (Date >= meting.Start && Date < meting.End)
                 {
                     CanBeBooked = false;
+                    ShowError = true;
+                break;
                 }
                 else
                 {
                     CanBeBooked = true;
+                    ShowError = false;
                 }
             }
-            
-        }
-
+            return CanBeBooked;       
     }
 }
 
@@ -83,6 +83,10 @@
         <div>Create meeting</div>
         <input @bind="Date" type="datetime-local"/>
         <button class="navigation_button" type="submit">Submit</button>
+        @if (ShowError)
+        {
+            <span>There is alredy a meeting at the selected time</span>
+        }
         
     </form>
 </div>
