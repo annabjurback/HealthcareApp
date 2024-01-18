@@ -23,6 +23,18 @@ namespace HealthCare.Core.Repositories
 			_context.SaveChanges();
 		}
 
+		public List<Booking> GetAvailableAppointments(string? caregiverId)
+		{
+			if (string.IsNullOrWhiteSpace(caregiverId))
+			{
+				return _context.Bookings.Where(patient => patient.PatientId == null).ToList();
+			}
+			else
+			{
+				return _context.Bookings.Where(caregiver => caregiver.CaregiverId == caregiverId).Where(patient => patient.PatientId == null).ToList();
+			}
+		}
+
 		public List<Booking> GetBookings(string id)
 		{
 			return _context.Bookings.Where(p => p.PatientId == id).ToList();
