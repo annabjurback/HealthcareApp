@@ -14,37 +14,39 @@
 
 
 }
+@if(Bookings != null){
 
-<div class="day-container" id="monday-container">
-	<div class="day-label">@string.Join(", ", Bookings?.Select(b => b.Start.DayOfWeek.ToString())?.Distinct())</div>
-	<div class="day-content">
-		@foreach (var booking in Bookings)
-		{
-				
+		<div class="day-container" id="monday-container">
+		<div class="day-label">@string.Join(", ", Bookings?.Select(b => b.Start.DayOfWeek.ToString())?.Distinct())</div>
+		<div class="day-content">
+			@foreach (var booking in Bookings)
 			{
-				@if (booking.PatientId == null)
-				{
-					<div class="@BookingHasNoPatient">
-						<div class="time">
-							<p>@booking.Start.TimeOfDay</p>
-						</div>
-					
-					</div>
-				}
-				else
-				{
-					
-					<div class="@BookingHasPatient">
-						<div class="time">
-							<p>@booking.Start.TimeOfDay</p>
-						</div>
-						<div class="note">
-							<p>@booking.Note</p>
-						</div>
-					</div>
-				}
 
+				{
+					@if (booking.PatientId == null)
+					{
+									<div class="@BookingHasNoPatient">
+										<div class="time">
+											<p>@booking.Start.TimeOfDay</p>
+										</div>
+
+									</div>
+					}
+					else
+					{
+
+									<div class="@BookingHasPatient">
+										<div class="time">
+											<p>@booking.Start.TimeOfDay</p>
+										</div>
+										<div class="note">
+											<p>@booking.Note</p>
+										</div>
+									</div>
+					}
+
+				}
 			}
-		}
+		</div>
 	</div>
-</div>
+}
