@@ -11,10 +11,6 @@ namespace HealthCare.Core.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string? Note { get; set; }
-
-        //[ForeignKey(nameof(Service))]
-        //public int ServiceId { get; set; }
-        //public Service Service { get; set; }
         public bool? Completed { get; set; }
 
 		public string? PatientId { get; set; }
@@ -22,7 +18,7 @@ namespace HealthCare.Core.Models
 
 		[ForeignKey(nameof(Caregiver))]
 		public string CaregiverId { get; set; }
-        public Caregiver Caregiver { get; set; }
+        public virtual Caregiver Caregiver { get; set; }
     }
 
 }
