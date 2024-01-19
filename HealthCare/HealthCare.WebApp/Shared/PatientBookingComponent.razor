@@ -99,7 +99,7 @@
 
 				@foreach (Caregiver caregiver in caregivers)
 				{
-					<option value="@caregiver.CaregiverId" required>@caregiver.FirstName @caregiver.LastName</option>
+					<option value="@caregiver.CaregiverId" required>@caregiver.FirstName @caregiver.LastName (@caregiver.Role)</option>
 				}
 			</select>
 		</div>

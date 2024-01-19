@@ -89,5 +89,18 @@ namespace HealthCare.Core.Controllers
 				return BadRequest(ex.InnerException);
 			}
 		}
+
+		[HttpPut]
+		public ActionResult<Booking> UpdateBooking(int id, string patientId, string? note)
+		{
+			try
+			{
+				return Ok(_bookingRepository.UpdateBooking(id, patientId, note));
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(ex.InnerException);
+			}
+		}
 	}
 }

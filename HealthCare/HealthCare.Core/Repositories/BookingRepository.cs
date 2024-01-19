@@ -1,5 +1,6 @@
 ﻿using HealthCare.Core.Context;
 using HealthCare.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,24 @@ namespace HealthCare.Core.Repositories
 
 		public List<Booking> GetBookings(string id)
 		{
-			return _context.Bookings.Where(p => p.PatientId == id).ToList();
+			return _context.Bookings.Where(p => p.PatientId == id)
+				.Include(c => c.Caregiver)
+				.ToList();
+		}
+
+		public Booking UpdateBooking(int id, string patientId, string? note)
+		{
+			Booking booking = _context.Bookings.First(dbApointment => dbApointment.BookingId == id);
+
+			booking.PatientId = patientId;
+
+			if(note != null)
+			{
+				booking.Note = note.ToString();
+			}
+
+			_context.SaveChanges();
+			return booking;
 		}
 
         public List<Booking> GetBookingsForCaregivers(string id)
