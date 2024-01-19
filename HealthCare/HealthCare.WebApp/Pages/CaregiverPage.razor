@@ -30,16 +30,7 @@
         StateHasChanged();
 
     }
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender && !hasLoaded)
-    //    {
-    //        StateHasChanged(); 
-    //        hasLoaded = true;
-    //    }
-    //}
-
-
+ 
     public async Task CreateEmptyMeeting(){
 
         await CheckOverlapingTimeInCalender(Date);
@@ -85,8 +76,8 @@
 
     public async Task<List<Booking>> FilterBookingsByDayOfWeekAndWeek(List<Booking> bookings, DayOfWeek dayOfWeek, DateTime today)
     {
-        var weekStartDate = today.Date.AddDays(-(int)today.DayOfWeek); // Startdatum för veckan
-        var weekEndDate = weekStartDate.AddDays(6); // Slutdatum för veckan
+        var weekStartDate = today.Date.AddDays(-(int)today.DayOfWeek); 
+        var weekEndDate = weekStartDate.AddDays(6); 
 
         var filteredBookings = bookings
             .Where(booking => booking.Start.DayOfWeek == dayOfWeek && booking.Start >= weekStartDate && booking.Start <= weekEndDate)
