@@ -20,14 +20,14 @@ namespace HealthCare.Core.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult CreateReview(string reviewText, int rating, string patientId)
+		public ActionResult CreateReview(string reviewtext, string rating, string patientId)
 		{
 			try
 			{
 				var review = new Review
 				{
-					ReviewText = reviewText,
-					Rating = rating,
+					ReviewText = reviewtext,
+					Rating = Convert.ToInt32(rating),
 					PatientId = patientId
 				};
 

@@ -1,7 +1,7 @@
 ﻿@page "/reviewpage"
 @inject NavigationManager Navigation
 @inject UserDataService UserDataService
-@inject HealthCare.Core.Models.Patient patient
+@* @inject HealthCare.Core.Models.Patient patient *@
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Models
 @using HealthCare.Core.Controllers;
@@ -10,42 +10,72 @@
 
 <h3>Leave a review:</h3>
 <form>
-	<label> Enter your review: <input type="text" @bind="reviewtext"/>
+	<label> Enter your review: <input type="text" @bind="review"/>
 		</label>
 	<p> Select rating: </p>
 	<div class="review-stars">
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="1" @onchange="@(() => starNumber = 1)"/>
+			<input type="radio" class="star" value="1" @onchange="@(() => rating = 1)"/>
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="2" @onchange="@(() => starNumber = 2)" />
+			<input type="radio" class="star" value="2" @onchange="@(() => rating = 2)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="3" @onchange="@(() => starNumber = 3)" />
+			<input type="radio" class="star" value="3" @onchange="@(() => rating = 3)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="4" @onchange="@(() => starNumber = 4)" />
+			<input type="radio" class="star" value="4" @onchange="@(() => rating = 4)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="5" @onchange="@(() => starNumber = 5)" />
+			<input type="radio" class="star" value="5" @onchange="@(() => rating = 5)" />
 		</label>
 	</div>
 	<button @onclick=SubmitReview>Submit review</button>
 </form>
 
+@if (message != null)
+{
+	<p> @message </p>
+}
 
 @code {
 	public string patientId { get; set; }
-	public int starNumber { get; set; }
-	public string reviewtext { get; set; }
+	public int rating { get; set; }
+	public string? review { get; set; }
+	public string? message { get; set; }
 
-	public void SubmitReview()
+	public async void SubmitReview()
 	{
-		var x = "hello";
+		if (rating == 0)
+		{
+			message = "Please select a star rating before submitting";
+		}
+		else
+		{
+			message = null;
+		}
+
+		// string me = "google-oauth2|103522804636630732484";
+		// var test = EncodeURIComponent(me); 
+		patientId = await UserDataService.GetUserIdAsync();
+
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var query = new Dictionary<string, string>()
+		{
+			["reviewtext"] = review ?? "",
+			["rating"] = rating.ToString(),
+			["patientId"] = patientId
+		};
+		var uri = QueryHelpers.AddQueryString("/api/review", query!);
+		var saveReviewResponse = await httpClient.PostAsync(uri, null);
+
+		var x = 6;
+
 	}
 }
