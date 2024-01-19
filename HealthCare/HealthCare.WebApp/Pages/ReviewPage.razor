@@ -8,8 +8,32 @@
 
 <h3>Leave a review:</h3>
 <form>
-	<label> Enter your review: <input type="text"/></label>
+	<label> Enter your review: <input type="text" /></label>
+	<p> Select rating: </p>
+	<div class="review-stars">
+		<label class="clickable">
+			★
+			<input type="radio" class="star" name="stars" value="1" />
+		</label>
+		<label class="clickable">
+			★
+			<input type="radio" class="star" name="stars" value="2" />
+		</label>
+		<label class="clickable">
+			★
+			<input type="radio" class="star" name="stars" value="3" />
+		</label>
+		<label class="clickable">
+			★
+			<input type="radio" class="star" name="stars" value="4" />
+		</label>
+		<label class="clickable">
+			★
+			<input type="radio" class="star" name="stars" value="5" />
+		</label>
+	</div>
 </form>
+
 
 @code {
 
