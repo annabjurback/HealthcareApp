@@ -57,5 +57,12 @@ namespace HealthCare.Core.Repositories
 			_context.SaveChanges();
 			return booking;
 		}
-	}
+
+        public List<Booking> GetBookingsForCaregivers(string id)
+        {
+            return _context.Bookings.Where(p => p.CaregiverId == id).ToList();
+        }
+
+    }
 }
+
