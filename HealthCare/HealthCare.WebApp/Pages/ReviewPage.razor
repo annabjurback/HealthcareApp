@@ -1,40 +1,51 @@
-﻿@inject NavigationManager Navigation
+﻿@page "/reviewpage"
+@inject NavigationManager Navigation
 @inject UserDataService UserDataService
 @inject HealthCare.Core.Models.Patient patient
-@page "/reviewpage"
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Models
+@using HealthCare.Core.Controllers;
+@using Microsoft.AspNetCore.WebUtilities
 
 
 <h3>Leave a review:</h3>
 <form>
-	<label> Enter your review: <input type="text" /></label>
+	<label> Enter your review: <input type="text" @bind="reviewtext"/>
+		</label>
 	<p> Select rating: </p>
 	<div class="review-stars">
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="1" />
+			<input type="radio" class="star" name="stars" value="1" @onchange="@(() => starNumber = 1)"/>
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="2" />
+			<input type="radio" class="star" name="stars" value="2" @onchange="@(() => starNumber = 2)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="3" />
+			<input type="radio" class="star" name="stars" value="3" @onchange="@(() => starNumber = 3)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="4" />
+			<input type="radio" class="star" name="stars" value="4" @onchange="@(() => starNumber = 4)" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" name="stars" value="5" />
+			<input type="radio" class="star" name="stars" value="5" @onchange="@(() => starNumber = 5)" />
 		</label>
 	</div>
+	<button @onclick=SubmitReview>Submit review</button>
 </form>
 
 
 @code {
+	public string patientId { get; set; }
+	public int starNumber { get; set; }
+	public string reviewtext { get; set; }
 
+	public void SubmitReview()
+	{
+		var x = "hello";
+	}
 }
