@@ -404,32 +404,19 @@ label.clickable:has(input.star[type=radio]) {
     color: black;
 }
 
-/* if a radio is checked all stars should be blue...*/
+/* if a radio is checked all stars should be yellow...*/
 .review-stars:has(label.clickable input[type=radio]:checked) label.clickable {
-    color: rgb(25, 155, 200);
+    color: rgb(255,200,61);
 }
 
-/* ...or yellow if smaller screen...*/
-@media only screen and (max-width: 767px) {
-    .review-stars:has(label.clickable input[type=radio]:checked) label.clickable {
-        color: yellow;
-    }
-}
 /*.... but stars following the checked star should be black*/
 label.clickable:has(input.star[type=radio]:checked) ~ label.clickable {
     color: black;
 }
 
-/*And also, hovering over div makes all stars blue....*/
+/*And also, hovering over div makes all stars yellow....*/
 div.review-stars:hover label.clickable:has(input.star[type=radio]) {
-    color: rgb(25, 155, 200);
-}
-
-/* ... or yellow if smaller screen */
-@media only screen and (max-width: 767px) {
-    div.review-stars:hover label.clickable:has(input.star[type=radio]) {
-        color: yellow;
-    }
+    color: rgb(255,200,61);
 }
 
 /*.... but hovering over star label makes preceding stars black*/
