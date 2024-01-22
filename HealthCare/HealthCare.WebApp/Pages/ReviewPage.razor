@@ -10,13 +10,14 @@
 
 <h3>Leave a review:</h3>
 <form>
-	<label> Enter your review: <input type="text" @bind="review"/>
-		</label>
+	<label>
+		Enter your review: <input type="text" @bind="review" />
+	</label>
 	<p> Select rating: </p>
 	<div class="review-stars">
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="1" @onchange="@(() => rating = 1)"/>
+			<input type="radio" class="star" value="1" @onchange="@(() => rating = 1)" />
 		</label>
 		<label class="clickable">
 			★
@@ -35,16 +36,17 @@
 			<input type="radio" class="star" value="5" @onchange="@(() => rating = 5)" />
 		</label>
 	</div>
-	<button @onclick=SubmitReview>Submit review</button>
+	<button @onclick=SubmitReview disabled>Submit review</button>
 </form>
 
-@if (message != null)
+@while (message != null)
 {
 	<p> @message </p>
 }
 
 @code {
 	public string patientId { get; set; }
+
 	public int rating { get; set; }
 	public string? review { get; set; }
 	public string? message { get; set; }
@@ -58,24 +60,22 @@
 		else
 		{
 			message = null;
+			patientId = await UserDataService.GetUserIdAsync();
+
+			var httpClient = new HttpClient(new HttpClientHandler());
+			httpClient.BaseAddress = new Uri("https://localhost:7139/");
+			var query = new Dictionary<string, string>()
+				{
+					["reviewtext"] = review ?? "",
+					["rating"] = rating.ToString(),
+					["patientId"] = patientId
+				};
+			var uri = QueryHelpers.AddQueryString("/api/review", query!);
+			var saveReviewResponse = await httpClient.PostAsync(uri, null);
 		}
 
-		// string me = "google-oauth2|103522804636630732484";
-		// var test = EncodeURIComponent(me); 
-		patientId = await UserDataService.GetUserIdAsync();
-
-		var httpClient = new HttpClient(new HttpClientHandler());
-		httpClient.BaseAddress = new Uri("https://localhost:7139/");
-		var query = new Dictionary<string, string>()
-		{
-			["reviewtext"] = review ?? "",
-			["rating"] = rating.ToString(),
-			["patientId"] = patientId
-		};
-		var uri = QueryHelpers.AddQueryString("/api/review", query!);
-		var saveReviewResponse = await httpClient.PostAsync(uri, null);
 	}
-		// kvar: fixa att meddelandet står kvar, elelr få nån såndär automatisk input type varning
+	// kvar: fixa att meddelandet står kvar, elelr få nån såndär automatisk input type varning
 
-		// lägg in nåt om reviews poå inloggningssidan
+	// lägg in nåt om reviews poå inloggningssidan
 }
