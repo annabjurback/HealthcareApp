@@ -2,6 +2,7 @@
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Models
 @inject UserDataService UserDataService
+@inject IJSRuntime JSRuntime
 @*@inject HealthCare.Core.Models.Booking Booking*@
 
 @code{
@@ -14,17 +15,25 @@
     public bool CanBeBooked = true;
     public List<Booking> Bookings = new List<Booking>();
     public bool ShowError = false;
+    public List<Booking> AllBookings = new List<Booking>();
+    public List<Booking> Monday = new List<Booking>();
+    public List<Booking> Tuesday = new List<Booking>();
+    public List<Booking> Wednesday = new List<Booking>();
+    public List<Booking> Thursday = new List<Booking>();
+    public List<Booking> Friday = new List<Booking>();
+    private bool hasLoaded = false;
 
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnInitializedAsync()
     {
         CaregiverId = await UserDataService.GetUserIdAsync();
+        await getAllMeetings();
+        StateHasChanged();
 
     }
-
+ 
     public async Task CreateEmptyMeeting(){
 
-       await CheckOverlapingTimeInCalender(Date);
+        await CheckOverlapingTimeInCalender(Date);
 
         using var httpClient = new HttpClient(new HttpClientHandler())
             {
@@ -35,7 +44,46 @@
         {
             var apiEndpoint = $"/api/booking/?start={Date}&note={Note}&completed={Completed}&patientId={PatientID}&caregiverId={CaregiverId}";
             var getBookingResponse = await httpClient.PostAsync(apiEndpoint, null);
+            if (getBookingResponse.IsSuccessStatusCode)
+            {
+                await getAllMeetings();
+                StateHasChanged();
+            }
         }
+    }
+
+    public async Task getAllMeetings()
+    {
+        var today = DateTime.Now;
+
+        using var httpClient = new HttpClient(new HttpClientHandler())
+            {
+                BaseAddress = new Uri("https://localhost:7139/")
+            };
+
+        var apiEndpoint = $"/api/booking/getAllBookingsForCaregivers?Id={CaregiverId}";
+        var getBookingResponse = await httpClient.GetAsync(apiEndpoint);
+
+        AllBookings = await getBookingResponse.Content.ReadFromJsonAsync<List<Booking>>();
+
+        Monday = await FilterBookingsByDayOfWeekAndWeek(AllBookings, DayOfWeek.Monday, today);
+        Tuesday = await FilterBookingsByDayOfWeekAndWeek(AllBookings, DayOfWeek.Tuesday, today);
+        Wednesday = await FilterBookingsByDayOfWeekAndWeek(AllBookings, DayOfWeek.Wednesday, today);
+        Thursday = await FilterBookingsByDayOfWeekAndWeek(AllBookings, DayOfWeek.Thursday, today);
+        Friday = await FilterBookingsByDayOfWeekAndWeek(AllBookings, DayOfWeek.Friday, today);
+        StateHasChanged();
+    }
+
+    public async Task<List<Booking>> FilterBookingsByDayOfWeekAndWeek(List<Booking> bookings, DayOfWeek dayOfWeek, DateTime today)
+    {
+        var weekStartDate = today.Date.AddDays(-(int)today.DayOfWeek); 
+        var weekEndDate = weekStartDate.AddDays(6); 
+
+        var filteredBookings = bookings
+            .Where(booking => booking.Start.DayOfWeek == dayOfWeek && booking.Start >= weekStartDate && booking.Start <= weekEndDate)
+            .ToList();
+
+        return filteredBookings;
     }
 
     public async Task<bool> CheckOverlapingTimeInCalender(DateTime Date)
@@ -92,111 +140,14 @@
 </div>
 
 <div class="week-view">
-    <div class="day-container" id="monday-container">
-        <div class="day-label">Monday</div>
-        <div class="day-content">
-        </div>
-    </div>
-    <div class="day-container" id="tuesday-container">
-        <div class="day-label">Tuesday</div>
-        <div class="day-content">
-        </div>
-    </div>
-    <div class="day-container" id="wednesday-container">
-        <div class="day-label">Wednesday</div>
-        <div class="day-content">
-        </div>
-    </div>
-    <div class="day-container" id="thursday-container">
-        <div class="day-label">Thursday</div>
-        <div class="day-content">
-        </div>
-    </div>
-    <div class="day-container" id="friday-container">
-        <div class="day-label">Friday</div>
-        <div class="day-content">
-        </div>
-    </div>
+
+    <CalenderComponent Bookings="Monday"/>
+    <CalenderComponent Bookings="Tuesday" />
+    <CalenderComponent Bookings="Wednesday"/>
+    <CalenderComponent Bookings=" Thursday"/>
+    <CalenderComponent Bookings="Friday" />
+
 </div>
-
-@*<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #C7DCE2;
-    }
-
-    .top-banner img {
-        width: 100vw;
-        height: 30vh; 
-        object-fit: cover; 
-        display: block; 
-    }
-
-    .navigation {
-        display: flex;
-        justify-content: space-around;
-        padding: 10px;
-        background: rgb(135,192,203);
-        background: linear-gradient(0deg, rgba(135,192,203,1) 16%, rgba(88,152,164,1) 98%);
-    }
-
-    .navigation button {
-        padding: 10px 20px;
-        border: none;
-        background: rgb(133,190,200);
-        background: linear-gradient(0deg, rgba(133,190,200,1) 16%, rgba(255,255,255,1) 98%);
-        color: white;
-        cursor: pointer;
-        border-radius: 21px;
-        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-    }
-
-    .sub-navigation {
-        display: flex;
-        justify-content: space-around;
-        padding: 10px;
-        background:
-    }
-
-    .week-view {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        background-color: #C7DCE2;
-        flex: 1;
-    }
-
-    .day-container {
-        background-color: white;
-        margin: 5px;
-        border-radius: 10px;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-        -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-        -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
-        min-height: 55vh;
-    }
-
-    .day-label {
-        color: #333;
-        padding: 10px;
-        text-align: center;
-        font-weight: bold;
-        margin: 5%;
-        background-color: #F1ECEC;
-        border-radius: 15px;
-        box-shadow: 0px 4px 4px 0px #00000040;
-    }
-
-    .day-content {
-        padding: 20px;
-        flex-grow: 1;
-    }
-</style>*@
+      
+    
+    

@@ -1,0 +1,52 @@
+﻿@using HealthCare.WebApp.Services
+@using HealthCare.Core.Models
+@inject UserDataService UserDataService
+
+
+@code {
+	[Parameter]
+
+	public List<Booking> Bookings { get; set; }
+
+	public string DayOfWeekString { get; private set; }
+	public string BookingHasPatient = "booking_with_patient";
+	public string BookingHasNoPatient = "booking_with_no_patient";
+
+
+}
+@if(Bookings != null){
+
+		<div class="day-container" id="monday-container">
+		<div class="day-label">@string.Join(", ", Bookings?.Select(b => b.Start.DayOfWeek.ToString())?.Distinct())</div>
+		<div class="day-content">
+			@foreach (var booking in Bookings)
+			{
+
+				{
+					@if (booking.PatientId == null)
+					{
+									<div class="@BookingHasNoPatient">
+										<div class="time">
+											<p>@booking.Start.TimeOfDay</p>
+										</div>
+
+									</div>
+					}
+					else
+					{
+
+									<div class="@BookingHasPatient">
+										<div class="time">
+											<p>@booking.Start.TimeOfDay</p>
+										</div>
+										<div class="note">
+											<p>@booking.Note</p>
+										</div>
+									</div>
+					}
+
+				}
+			}
+		</div>
+	</div>
+}
