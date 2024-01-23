@@ -8,35 +8,33 @@
 
 
 <h3>Leave a review:</h3>
-<form>
-	<label>
-		Enter your review: <input type="text" @bind="review" />
+<label>
+	Enter your review: <input type="text" @bind="review" />
+</label>
+<p> Select rating: </p>
+<div class="review-stars">
+	<label class="clickable">
+		★
+		<input type="radio" class="star" @onchange="@(() => rating = "1")" />
 	</label>
-	<p> Select rating: </p>
-	<div class="review-stars">
-		<label class="clickable">
-			★
-			<input type="radio" class="star" @onchange="@(() => rating = "1")" />
-		</label>
-		<label class="clickable">
-			★
-			<input type="radio" class="star" @onchange="@(() => rating = "2")" />
-		</label>
-		<label class="clickable">
-			★
-			<input type="radio" class="star" @onchange="@(() => rating = "3")" />
-		</label>
-		<label class="clickable">
-			★
-			<input type="radio" class="star" @onchange="@(() => rating = "4")" />
-		</label>
-		<label class="clickable">
-			★
-			<input type="radio" class="star" @onchange="@(() => rating = "5")" />
-		</label>
-	</div>
-	<button type="submit" @onclick=SubmitReview disabled="@(!isRadioSelected)">Submit review</button>
-</form>
+	<label class="clickable">
+		★
+		<input type="radio" class="star" @onchange="@(() => rating = "2")" />
+	</label>
+	<label class="clickable">
+		★
+		<input type="radio" class="star" @onchange="@(() => rating = "3")" />
+	</label>
+	<label class="clickable">
+		★
+		<input type="radio" class="star" @onchange="@(() => rating = "4")" />
+	</label>
+	<label class="clickable">
+		★
+		<input type="radio" class="star" @onchange="@(() => rating = "5")" />
+	</label>
+</div>
+<button @onclick=SubmitReview disabled="@(!isRadioSelected)">Submit review</button>
 
 @* @if (showErrorMessage)
 {
@@ -66,14 +64,22 @@
 				["patientId"] = patientId
 			};
 		var uri = QueryHelpers.AddQueryString("/api/review", query!);
-		var saveReviewResponse = await httpClient.PostAsync(uri, null);
-
-		if (!saveReviewResponse.IsSuccessStatusCode)
+		try
 		{
-			Navigation.NavigateTo("/Error");
+			var saveReviewResponse = await httpClient.PostAsync(uri, null);
+			if (!saveReviewResponse.IsSuccessStatusCode)
+			{
+				Navigation.NavigateTo("/Error");
+			}
+			else
+			{
+				Navigation.NavigateTo("/patientpage");
+			}
 		}
-		Navigation.NavigateTo("/patientpage");
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Exception: {ex.Message}");
+		}
 	}
 	// varför navigerar den inte till sidan?? testa rebuilda..?
-	// lägg in nåt om reviews poå inloggningssidan
 }
