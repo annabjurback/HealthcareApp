@@ -8,6 +8,16 @@ html, body {
     background-color: #C7DCE2;
     max-width: 90%;*/
 }
+
+/*----------INDEX-PAGE STARS STYLE-----------*/
+div.review-container p span.star-yellow {
+    color: rgb(255,200,61);
+}
+
+div.review-container p span.star-black {
+    color: black;
+}
+
 /*
 Caregiverpage*/
 
