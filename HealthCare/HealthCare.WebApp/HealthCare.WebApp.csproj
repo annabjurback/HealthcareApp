@@ -14,8 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Middlewares\" />
-    <Folder Include="Pages\Feedback\" />
-    <Folder Include="Pages\Appointment\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Auth0.AuthenticationApi" Version="7.26.0" />
