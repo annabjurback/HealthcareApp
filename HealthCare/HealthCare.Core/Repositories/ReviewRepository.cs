@@ -25,7 +25,7 @@ namespace HealthCare.Core.Repositories
 
 		public List<Review> GetReviews()
 		{
-			return _context.Reviews.ToList();
+			return _context.Reviews.OrderByDescending(id => id.ReviewId).Take(15).ToList();
 		}
 	}
 }
