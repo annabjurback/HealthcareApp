@@ -1,7 +1,6 @@
 ﻿@page "/reviewpage"
 @inject NavigationManager Navigation
 @inject UserDataService UserDataService
-@* @inject HealthCare.Core.Models.Patient patient *@
 @using HealthCare.WebApp.Services
 @using HealthCare.Core.Models
 @using HealthCare.Core.Controllers;
@@ -17,65 +16,64 @@
 	<div class="review-stars">
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="1" @onchange="@(() => rating = 1)" />
+			<input type="radio" class="star" @onchange="@(() => rating = "1")" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="2" @onchange="@(() => rating = 2)" />
+			<input type="radio" class="star" @onchange="@(() => rating = "2")" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="3" @onchange="@(() => rating = 3)" />
+			<input type="radio" class="star" @onchange="@(() => rating = "3")" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="4" @onchange="@(() => rating = 4)" />
+			<input type="radio" class="star" @onchange="@(() => rating = "4")" />
 		</label>
 		<label class="clickable">
 			★
-			<input type="radio" class="star" value="5" @onchange="@(() => rating = 5)" />
+			<input type="radio" class="star" @onchange="@(() => rating = "5")" />
 		</label>
 	</div>
-	<button @onclick=SubmitReview disabled>Submit review</button>
+	<button type="submit" @onclick=SubmitReview disabled="@(!isRadioSelected)">Submit review</button>
 </form>
 
-@while (message != null)
+@* @if (showErrorMessage)
 {
-	<p> @message </p>
-}
+	<p> Please select a star rating before submitting </p>
+} *@
 
 @code {
 	public string patientId { get; set; }
-
-	public int rating { get; set; }
+	public string rating { get; set; }
 	public string? review { get; set; }
-	public string? message { get; set; }
+	// public string? message { get; set; }
+	// private bool showErrorMessage { get; set; } = false;
+	private bool isRadioSelected => !string.IsNullOrEmpty(rating);
 
-	public async void SubmitReview()
+	public async Task SubmitReview()
 	{
-		if (rating == 0)
-		{
-			message = "Please select a star rating before submitting";
-		}
-		else
-		{
-			message = null;
-			patientId = await UserDataService.GetUserIdAsync();
+		int ratingInt = Convert.ToInt32(rating);
+		// message = null;
+		patientId = await UserDataService.GetUserIdAsync();
 
-			var httpClient = new HttpClient(new HttpClientHandler());
-			httpClient.BaseAddress = new Uri("https://localhost:7139/");
-			var query = new Dictionary<string, string>()
-				{
-					["reviewtext"] = review ?? "",
-					["rating"] = rating.ToString(),
-					["patientId"] = patientId
-				};
-			var uri = QueryHelpers.AddQueryString("/api/review", query!);
-			var saveReviewResponse = await httpClient.PostAsync(uri, null);
-		}
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var query = new Dictionary<string, string>()
+			{
+				["reviewtext"] = review ?? "",
+				["rating"] = rating,
+				["patientId"] = patientId
+			};
+		var uri = QueryHelpers.AddQueryString("/api/review", query!);
+		var saveReviewResponse = await httpClient.PostAsync(uri, null);
 
+		if (!saveReviewResponse.IsSuccessStatusCode)
+		{
+			Navigation.NavigateTo("/Error");
+		}
+		Navigation.NavigateTo("/patientpage");
 	}
-	// kvar: fixa att meddelandet står kvar, elelr få nån såndär automatisk input type varning
-
+	// varför navigerar den inte till sidan?? testa rebuilda..?
 	// lägg in nåt om reviews poå inloggningssidan
 }
