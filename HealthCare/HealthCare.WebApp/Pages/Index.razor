@@ -1,17 +1,49 @@
 ﻿@page "/"
 @inject IConfiguration Configuration
 @inject NavigationManager NavigationManager
+@using HealthCare.Core.Models
 
 <div class="app-container">
-    <div class="toolbar"></div>
-    <h1>Welcome to your digital healthcare ❤</h1>
-    <button @onclick="Login">Login</button>
+	<div class="toolbar"></div>
+	<h1>Welcome to your digital healthcare ❤</h1>
+	<button @onclick="Login">Login</button>
 </div>
+@if (reviews != null)
+{
+	<div class="review-container">
+		<h2>Here's what our patients think about us:</h2>
+		@foreach (Review review in reviews)
+		{
+			<p class="review">
+			@for(int i = 1; i <= 5; i++)
+			{
+					string className = "star-" + (i > review.Rating ? "black" : "yellow");
+					<span class=@className>★</span>
+			}
+			@review.ReviewText</p>
+		}
+	</div>
+}
+
 
 @code {
-    private void Login()
-    {
-        var returnUrl = $"{NavigationManager.BaseUri}sendto";
-        NavigationManager.NavigateTo($"https://{Configuration["Auth0:Domain"]}/authorize?client_id={Configuration["Auth0:ClientId"]}&response_type=code&redirect_uri={returnUrl}&scope=openid profile", forceLoad: true);
-    }
+	private List<Review>? reviews;
+	private void Login()
+	{
+		var returnUrl = $"{NavigationManager.BaseUri}sendto";
+		NavigationManager.NavigateTo($"https://{Configuration["Auth0:Domain"]}/authorize?client_id={Configuration["Auth0:ClientId"]}&response_type=code&redirect_uri={returnUrl}&scope=openid profile", forceLoad: true);
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		var httpClient = new HttpClient(new HttpClientHandler());
+		httpClient.BaseAddress = new Uri("https://localhost:7139/");
+		var uri = ("/api/review");
+		var getReviewsResponse = await httpClient.GetAsync(uri);
+
+		if (getReviewsResponse.IsSuccessStatusCode)
+		{
+			reviews = await getReviewsResponse.Content.ReadFromJsonAsync<List<Review>>();
+		}
+	}
 }

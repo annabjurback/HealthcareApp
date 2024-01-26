@@ -8,6 +8,16 @@ html, body {
     background-color: #C7DCE2;
     max-width: 90%;*/
 }
+
+/*----------INDEX-PAGE STARS STYLE-----------*/
+div.review-container p span.star-yellow {
+    color: rgb(255,200,61);
+}
+
+div.review-container p span.star-black {
+    color: black;
+}
+
 /*
 Caregiverpage*/
 
@@ -54,16 +64,15 @@ Caregiverpage*/
     height: 30vh;
     overflow: hidden;
 }
-    .top-banner img {     
 
+    .top-banner img {
         width: 100%;
         height: auto;
         display: block;
-        object-fit: cover; 
+        object-fit: cover;
     }
 
 .navigation {
-
     display: flex;
     padding: 10px;
     background: rgb(135,192,203);
@@ -93,8 +102,7 @@ Caregiverpage*/
     background: rgb(133,190,200);
     background: linear-gradient(0deg, rgba(133,190,200,1) 16%, rgba(255,255,255,1) 98%);
     color: white;
-    font-weight:bold;
-   
+    font-weight: bold;
     cursor: pointer;
     border-radius: 21px;
     box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
@@ -111,18 +119,16 @@ Caregiverpage*/
     display: flex;
     justify-content: space-around;
     padding: 10px;
-   
 }
 
 .week-view {
-
     display: flex;
     justify-content: space-between;
     padding: 10px;
     background-color: #C7DCE2;
     flex: 1;
-    margin-left:65px;
-    margin-right:65px;
+    margin-left: 65px;
+    margin-right: 65px;
 }
 
 .day-container {
@@ -147,7 +153,7 @@ Caregiverpage*/
     text-align: center;
     font-weight: bold;
     height: 39px;
-    width:95%;
+    width: 95%;
     margin: 3%;
     background-color: #F1ECEC;
     border-radius: 15px;
@@ -161,26 +167,26 @@ Caregiverpage*/
 
 @media only screen and (max-width: 767px) {
 
-  /*  //Patient Page css*/
+    /*  //Patient Page css*/
 
     body {
-
         background-color: rgb(95,143,157);
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    main{
+
+    main {
         display: grid;
-        place-items:center;
+        place-items: center;
     }
-  
+
 
     .mobile_button_container {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 10px;
-        margin-top: 68px;     
+        margin-top: 68px;
         place-items: center;
     }
 
@@ -200,7 +206,6 @@ Caregiverpage*/
     }
 
         .mobile_button:active {
-
             background: linear-gradient(0deg, hsla(190, 40%, 56%, 1) 0%, hsla(189, 30%, 39%, 1) 100%);
         }
 
@@ -225,15 +230,14 @@ Caregiverpage*/
     }
 
     .meeting_text {
-
         order: 2;
         margin-left: 5%;
     }
 
     .mobile_meeting_container {
-        padding:10px;
+        padding: 10px;
         display: grid;
-        place-items:center;
+        place-items: center;
         width: 327px;
         min-height: 88px;
         border-radius: 21px;
@@ -252,7 +256,7 @@ Caregiverpage*/
         width: 285px;
         height: 48px;
         border-radius: 21px;
-        margin:10px;
+        margin: 10px;
         border: none;
         background-color: rgb(253,253,253);
         box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
@@ -262,52 +266,48 @@ Caregiverpage*/
         font-weight: bold;
     }
 
-    .mobile_title_container{
-       
-        width:350px;
-       margin:auto;
-        
+    .mobile_title_container {
+        width: 350px;
+        margin: auto;
     }
+
     .mobile_title {
-        
-        font-weight:bold;
-        font-size:20px;
-        color:white;
-        display:grid;
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+        display: grid;
         place-items: center;
-       margin-top: 26px;
+        margin-top: 26px;
     }
 
     .user_info_container {
         display: grid;
-        place-items: center;    
+        place-items: center;
         margin-top: 67px;
     }
+
     #user_img {
-       
         border: 5px solid white;
         border-radius: 50px;
         width: 60px;
         height: 60px;
     }
 
-    #user_name_display{
-
-        color:white;
+    #user_name_display {
+        color: white;
         font-weight: bold;
         font-size: 20px;
         margin-top: 21px;
     }
 
-   /* BookingPage css*/
+    /* BookingPage css*/
 
-    .booking_date_container{
-
-        display:grid;
-        place-items:center;
+    .booking_date_container {
+        display: grid;
+        place-items: center;
     }
-    .booking_style {
 
+    .booking_style {
         border: none;
         font-size: 22px;
         color: rgb(82,166,188);
@@ -321,7 +321,7 @@ Caregiverpage*/
         place-self: flex-start;
         background-color: white;
         color: rgb(82,166,188);
-        font-weight:bold;
+        font-weight: bold;
         border: none;
         border-radius: 21px;
         width: 60px;
@@ -330,11 +330,10 @@ Caregiverpage*/
         -webkit-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
         -moz-box-shadow: 5px 20px 30px -7px rgba(0,0,0,0.4);
     }
-        .home_button:active {
 
+        .home_button:active {
             background-color: rgb(128, 128, 128);
         }
-
 }
 
 h1:focus {
@@ -352,7 +351,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -400,3 +399,37 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+/* -------- REVIEW PAGE CSS -------*/
+div.review-stars {
+    width: fit-content;
+}
+
+input.star[type=radio] {
+    display: none;
+}
+
+/*default color: black*/
+label.clickable:has(input.star[type=radio]) {
+    font-size: 2rem;
+    color: black;
+}
+
+/* if a radio is checked all stars should be yellow...*/
+.review-stars:has(label.clickable input[type=radio]:checked) label.clickable {
+    color: rgb(255,200,61);
+}
+
+/*.... but stars following the checked star should be black*/
+label.clickable:has(input.star[type=radio]:checked) ~ label.clickable {
+    color: black;
+}
+
+/*And also, hovering over div makes all stars yellow....*/
+div.review-stars:hover label.clickable:has(input.star[type=radio]) {
+    color: rgb(255,200,61);
+}
+
+/*.... but hovering over star label makes preceding stars black*/
+label.clickable:has(input.star[type=radio]):hover ~ label.clickable:has(input.star[type=radio]) {
+    color: black;
+}
